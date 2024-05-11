@@ -110,7 +110,7 @@
                         sessionStorage.setItem('account',logindata.account)
 
                         ruleForm.load=false
-                        router.push('/S1')
+                        router.push('/main_information')
 
                         //登录菜单栏主页选项高亮
                         localStorage.setItem('menuid',JSON.stringify('1'))

@@ -7,8 +7,14 @@
 
 </template>
 
+<script setup>
+import { provide } from "vue";
 
-<script>
+//引入echarts
+import * as echarts from "echarts";
+
+//通过provide提供echarts
+provide("echarts", echarts);
 </script>
 
 
