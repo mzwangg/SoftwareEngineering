@@ -1,15 +1,30 @@
 <template>
   <HeaderComponent />
+
+  <div class="mainbox">
+    <ul class="clearfix nav1">
+      <li style="width: 80%; margin-left:10%;">
+
+        <div class="box">
+          <div class="tit">用户管理</div>
+
+          <UserList />
+
+        </div>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
-import HeaderComponent from '../ai-center/HeaderComponent.vue'; // 假设组件存放在components目录下
+import HeaderComponent from '../ai-center/HeaderComponent.vue';
+import UserList from '../administrater/UserList.vue';
 
 export default {
-components: {
-  HeaderComponent
-},
-// 其他页面的代码继续
+  components: {
+    HeaderComponent,
+    UserList,
+  },
 };
 
 </script>

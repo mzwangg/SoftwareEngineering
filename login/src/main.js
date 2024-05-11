@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 
 import './assets/headtap.css'
-import './ai-center/style.css'
+import './assets/style.css'
 
 /* 引入 router */
 import router from './router/router'
