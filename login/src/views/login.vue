@@ -51,44 +51,49 @@
         components: {
             SIdentify: SIdentify,
         },
-        setup(){
-            const ruleForm = reactive({
+        data(){
+            return{
+                ruleForm:{
                     userName: '',
                     password: '',
                     code: '',
-                    load:'false'
-                })
-            // 验证验证码
-            const checkCode=(rule, value, callback) => {
-                console.log(value,"value")
+                    load:false
+                },
+                // 自定义表单验证
+                rules:{
+                    userName: [
+                                { required: true, message: '请输入账号', trigger: 'blur' },
+                                { min: 6, max: 12, message: '账号长度 在 6 到 12 长度之间', trigger: 'blur' },
+                            ],
+                    password: [
+                                { required: true, message: '请输入密码', trigger: 'blur' },
+                                { min: 6, max: 12, message: '密码长度 在 6 到 12 长度之间', trigger: 'blur' },
+                            ],
+                    code: [
+                                { required: true, message: '请输入验证码', trigger: 'blur' },
+                                { trigger: 'change' },
+                        ],
+                },
+                identifyCode:'4444',
+                identifyCodes:'0123456789abcdefghijklnmopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
             }
-            // 自定义表单验证
-            const rules = reactive({
-                userName: [
-                            { required: true, message: '请输入账号', trigger: 'blur' },
-                            { min: 6, max: 12, message: '账号长度 在 6 到 12 长度之间', trigger: 'blur' },
-                        ],
-                password: [
-                            { required: true, message: '请输入密码', trigger: 'blur' },
-                            { min: 6, max: 12, message: '密码长度 在 6 到 12 长度之间', trigger: 'blur' },
-                        ],
-                code: [
-                            { required: true, message: '请输入验证码', trigger: 'blur' },
-                            { validator: checkCode, trigger: 'change' },
-                    ],
-            })
-            
-            const login= async ()=>{
-                ruleForm.load=true
+        },
+        methods:{
+            // 验证验证码
+            checkCode(rule, value, callback){
+                console.log(value,"value")
+            },
+            async login(){
+                this.ruleForm.load=true
                 const logindata={
                     account:'',
                     password:''
                 }
-                logindata.account=ruleForm.userName
-                logindata.password=ruleForm.password
+                logindata.account=this.ruleForm.userName
+                logindata.password=this.ruleForm.password
 
                 //验证码正确
-                if(identifyCode.value==ruleForm.code){
+                if(this.identifyCode==this.ruleForm.code){
 
                     // router.push('/S1')
 
@@ -102,14 +107,16 @@
                     
                     const res = await loginPost(logindata)
 
-                    // console.log(res.data.status)
-
                     if(res.data.status == 0){
                         //存储token和account
                         sessionStorage.setItem('Token',res)
                         sessionStorage.setItem('account',logindata.account)
 
-                        ruleForm.load=false
+                        //设置身份
+                        // 管理员 养殖户 用户
+                        this.$store.state.globalAuthority = res.data.result.identity
+                    
+                        this.ruleForm.load=false
                         router.push('/main_information')
 
                         //登录菜单栏主页选项高亮
@@ -117,13 +124,11 @@
                     }
                     //账号密码不存在
                     else{
-                        ruleForm.password=''
-                        ruleForm.code=''
-                        ruleForm.load=false
-                        refreshCode()
-                        if(res.data.status == 1){  
-                            ElMessage('账号或密码错误.')
-                        }
+                        this.ruleForm.password=''
+                        this.ruleForm.code=''
+                        this.ruleForm.load=false
+                        this.refreshCode()
+                        ElMessage('账号或密码错误.')
                         // else{
                         //     console.log(res)
                         //     let faildata=res.split("_")
@@ -137,42 +142,32 @@
                 }
                 //验证码错误
                 else{
-                    ruleForm.code=''
-                    ruleForm.load=false
+                    this.ruleForm.code=''
+                    this.ruleForm.load=false
                     ElMessage('验证码错误.')
-                    refreshCode()
+                    this.refreshCode()
                 }
-            }
-
-            const register=()=>{
-                ruleForm.load=true
+            },
+            register(){
+                this.ruleForm.load=true
                 router.push('/register')
-            }
-            
-            onMounted(()=>{})
-
+            },
 
             //生成图形验证码
-            const identifyCode=ref('4444')
-            const identifyCodes=ref('0123456789abcdefghijklnmopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
-            const randomNum = (min, max) => {
-                return Math.floor(Math.random() * (max - min) + min);
-            };
-            const refreshCode = () => {
-                identifyCode.value = "";
-                makeCode(identifyCodes, 4);
-            };
-            const makeCode = (o, l) => {
-                for (let i = 0; i < l; i++) {
-                    identifyCode.value +=
-                    identifyCodes.value[randomNum(0, identifyCodes.value.length)];
-                }
-            };
-            
-            return {login,register,rules,ruleForm,
-                    randomNum,refreshCode,makeCode,identifyCode
-            }
 
+            randomNum(min, max){
+                return Math.floor(Math.random() * (max - min) + min);
+            },
+            refreshCode(){
+                this.identifyCode = "";
+                this.makeCode(this.identifyCodes, 4);
+            },
+            makeCode(o, l){
+                for (let i = 0; i < l; i++) {
+                    this.identifyCode +=
+                    this.identifyCodes[this.randomNum(0, this.identifyCodes.length)];
+                }
+            }
         },
     }
 

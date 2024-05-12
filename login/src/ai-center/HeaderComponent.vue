@@ -1,7 +1,8 @@
 <template>
   <div class="head clearfix">
     <div class="home">
-      <router-link to="/administrator">管理员界面</router-link>
+      <!-- <router-link to="/administrator" @click.native="verify">管理员界面</router-link> -->
+      <el-button type="primary" @click="verify">管理员界面</el-button>
     </div>
     <div class="menu menu1 pulll_left">
       <ul>
@@ -21,6 +22,9 @@
 </template>
 
 <script>
+import { ElMessage } from 'element-plus'
+import router from '../router/router'
+
 export default {
   data() {
     return {
@@ -44,8 +48,18 @@ export default {
         requestAnimationFrame(updateTime); // 递归调用，保证更新时机与浏览器的重绘时机同步
       };
       updateTime();
+    },
+    verify(){
+      console.log(this.$store.state.globalAuthority)
+      if(this.$store.state.globalAuthority == '管理员'){
+        ElMessage('进入了管理员界面.')
+        router.push('/administrator')
+      }
+      else{
+        ElMessage('权限不足.')
+      }
     }
-  }
+  },
 };
 </script>
 
