@@ -5,10 +5,10 @@
   <div class="mainbox">
 
     <ul class="clearfix nav1">
-      <li style="width: 25%">
+      <li style="width: 30%">
         <div class="box">
           <div class="tit">安全评分</div>
-          <div class="boxnav" style="height: 180px">
+          <div class="boxnav" style="height: 150px">
             <div class="pfcontent">
               <div class="leftBox" style="height: 100%;">
                 <img src="../ai-center/img/aqdj.png" />
@@ -21,12 +21,12 @@
 
         <div class="box">
           <div class="tit">预警与通知</div>
-          <div class="message" style="height: 180px;color: red;">水温过高!</div>
+          <div class="message" style="height: 80px;color: red;">水温过高!</div>
         </div>
 
         <div class="box">
           <div class="tit">智能控制</div>
-          <div class="boxnav" style="height: 240px; display: flex; flex-direction: column; align-items: center;">
+          <div class="boxnav" style="height: 230px; display: flex; flex-direction: column; align-items: center;">
             <AiControl />
           </div>
         </div>
@@ -34,17 +34,17 @@
 
 
 
-      <li style="width: 50%">
+      <li style="width: 40%">
         <div class="box">
           <div class="tit">监控视频</div>
-          <div class="boxnav" style="height: 440px;">
+          <div class="boxnav" style="height: 320px;">
             <VideoControl />
           </div>
         </div>
 
         <div class="box">
           <div class="tit">识别结果</div>
-          <div class="boxnav" style="height: 215px;">
+          <div class="boxnav" style="height: 195px;">
             <div class="fish-block">
               <h3>编号</h3>
               <p>12345</p>
@@ -75,24 +75,25 @@
 
 
 
-      <li style="width: 25%">
+      <li style="width: 30%">
 
         <div class="box">
           <div class="tit">AI决策</div>
-          <div class="boxnav" style="height: 344px;">
+          <div class="boxnav" style="height: 224px;">
             <ul class="gnlb">
               <li><span>温度：<em>10-20</em></span></li>
               <li><span>光照：<em>20-100</em></span></li>
               <li><span>溶解氧：<em>0.2-0.5</em></span></li>
               <li><span>PH：<em>8-8.7</em></span></li>
               <li><span>盐度：<em>0.01-0.03</em></span></li>
+              <li><span>浊度：<em>2.00-2.03</em></span></li>
             </ul>
           </div>
         </div>
 
         <div class="box">
           <div class="tit">AI提示</div>
-          <div class="message" style="height: 180px;">
+          <div class="message" style="height: 160px;">
             未来几天可能降雨<br>
             请确保温度、风度正常。
           </div>
@@ -140,6 +141,9 @@ export default {
 
 </script>
 
-<style>
-
+<style scoped>
+.gnlb li {
+    width: 46%;
+    margin: 3% 2%;
+}
 </style>

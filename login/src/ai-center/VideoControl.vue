@@ -26,5 +26,6 @@ export default {
 <style scoped>
 .videoButton {
   margin-right: 10px;
+  width:70px;
 }
 </style>
