@@ -6,9 +6,9 @@
       <li style="width: 80%; margin-left:10%;">
 
         <div class="box">
-          <div class="tit">用户管理</div>
+          <div class="tit">数据管理</div>
 
-          <UserList />
+          <DataList />
 
         </div>
       </li>
@@ -18,12 +18,12 @@
 
 <script>
 import HeaderComponent from '../ai-center/HeaderComponent.vue';
-import UserList from '../administrater/UserList.vue';
+import DataList from '../administrater/DataList.vue';
 
 export default {
   components: {
     HeaderComponent,
-    UserList,
+    DataList,
   },
 };
 

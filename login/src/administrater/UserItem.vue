@@ -9,8 +9,8 @@
         </td>
 
         <!-- 编辑用户对话框 -->
-        <el-dialog v-model="editDialogVisible" title="编辑用户">
-            <el-form :model="editForm" label-width="100px">
+        <el-dialog v-model="editDialogVisible" title="编辑用户" width="30%">
+            <el-form :model="editForm" label-width="20%">
                 <el-form-item label="用户名">
                     <el-input v-model="editForm.account" autocomplete="off"></el-input>
                 </el-form-item>
@@ -32,8 +32,8 @@
         </el-dialog>
 
         <!-- 删除用户对话框 -->
-        <el-dialog v-model="deleteDialogVisible" title="删除用户">
-            <p>是否确定删除用户 {{ user.account }}？</p>
+        <el-dialog v-model="deleteDialogVisible" title="删除用户" width="30%">
+            <p style="text-align: center; padding: 20px;">是否确定删除用户 {{ user.account }}?</p>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="deleteDialogVisible = false" style="margin:0 20%;">取消</el-button>
                 <el-button type="danger" @click="deleteUser" style="margin:0 20%;">确定</el-button>
