@@ -2,7 +2,7 @@
     <tr class="table-row">
         <td>{{ user.account }}</td>
         <td>******</td>
-        <td>{{ user.role }}</td>
+        <td>{{ user.identity }}</td>
         <td class="buttons">
             <button @click="showEditDialog">修改</button>
             <button @click="showDeleteDialog">删除</button>
@@ -18,7 +18,7 @@
                     <el-input v-model="editForm.password" autocomplete="off" type="password"></el-input>
                 </el-form-item>
                 <el-form-item label="权限">
-                    <el-select v-model="editForm.role" placeholder="请选择">
+                    <el-select v-model="editForm.identity" placeholder="请选择">
                         <el-option label="User" value="User"></el-option>
                         <el-option label="Admin" value="Admin"></el-option>
                     </el-select>
@@ -64,7 +64,7 @@ export default {
             editForm: {
                 account: '',
                 password: '',
-                role: ''
+                identity: ''
             },
         };
     },
@@ -73,7 +73,7 @@ export default {
             // 在弹窗显示前，将用户信息填入编辑表单
             this.editForm.account = this.user.account;
             this.editForm.password = ''; // 不显示密码，需要用户手动输入
-            this.editForm.role = this.user.role;
+            this.editForm.identity = this.user.identity;
             this.editDialogVisible = true;
         },
         showDeleteDialog() {

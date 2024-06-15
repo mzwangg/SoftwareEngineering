@@ -35,7 +35,7 @@
                 <el-input v-model="addForm.password" autocomplete="off" type="password"></el-input>
             </el-form-item>
             <el-form-item label="权限">
-                <el-select v-model="addForm.role" placeholder="请选择">
+                <el-select v-model="addForm.identity" placeholder="请选择">
                     <el-option label="User" value="User"></el-option>
                     <el-option label="Admin" value="Admin"></el-option>
                 </el-select>
@@ -109,18 +109,18 @@ export default {
     data() {
         return {
             users: [
-                // { id: 1, account: 'user1', password: '******', role: 'Admin' },
-                // { id: 2, account: 'user2', password: '******', role: 'User' },
-                // { id: 3, account: 'user3', password: '******', role: 'User' },
-                // { id: 4, account: 'user4', password: '******', role: 'User' },
-                // { id: 5, account: 'user5', password: '******', role: 'User' },
-                // { id: 6, account: 'user6', password: '******', role: 'User' },
-                // { id: 7, account: 'user7', password: '******', role: 'User' },
-                // { id: 8, account: 'user8', password: '******', role: 'User' },
-                // { id: 9, account: 'user9', password: '******', role: 'User' },
-                // { id: 10, account: 'user10', password: '******', role: 'User' },
-                // { id: 11, account: 'user11', password: '******', role: 'User' },
-                // { id: 12, account: 'user12', password: '******', role: 'User' },
+                // { id: 1, account: 'user1', password: '******', identity: 'Admin' },
+                // { id: 2, account: 'user2', password: '******', identity: 'User' },
+                // { id: 3, account: 'user3', password: '******', identity: 'User' },
+                // { id: 4, account: 'user4', password: '******', identity: 'User' },
+                // { id: 5, account: 'user5', password: '******', identity: 'User' },
+                // { id: 6, account: 'user6', password: '******', identity: 'User' },
+                // { id: 7, account: 'user7', password: '******', identity: 'User' },
+                // { id: 8, account: 'user8', password: '******', identity: 'User' },
+                // { id: 9, account: 'user9', password: '******', identity: 'User' },
+                // { id: 10, account: 'user10', password: '******', identity: 'User' },
+                // { id: 11, account: 'user11', password: '******', identity: 'User' },
+                // { id: 12, account: 'user12', password: '******', identity: 'User' },
                 // // 其他示例用户数据...
             ],
             currentPage: 1,
@@ -128,7 +128,7 @@ export default {
             addForm: {
                 account: '',
                 password: '',
-                role: ''
+                identity: ''
             },
             addDialogVisible: false,
             showImportDialog: false,

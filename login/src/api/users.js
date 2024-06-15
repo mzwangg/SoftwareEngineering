@@ -13,7 +13,7 @@ export const addUser = (userData) => {
     const {
         account,
         password,
-        role
+        identity
     } = userData
     return instance({
         url: "/api/users",
@@ -21,7 +21,7 @@ export const addUser = (userData) => {
         data:{
             account,
             password,
-            role
+            identity
         }
     });
 }
@@ -30,7 +30,7 @@ export const updateUser = (userData) => {
     const {
         account,
         password,
-        role
+        identity
     } = userData
     return instance({
         url: `/api/users`,
@@ -38,7 +38,7 @@ export const updateUser = (userData) => {
         data: {
             account,
             password,
-            role
+            identity
         }
     });
 };

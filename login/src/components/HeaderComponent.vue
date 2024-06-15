@@ -55,7 +55,7 @@ export default {
       updateTime();
     },
     verify() {
-      if (this.$store.state.globalAuthority == '管理员') {
+      if (this.$store.state.globalAuthority == 'Admin') {
         ElMessage('进入了管理员界面.');
         router.push('/administrator');
       } else {

@@ -40,7 +40,7 @@ exports.register = (req,res) =>{
         // 第四步：把账号密码插入到users表里面
         const sql1 = 'insert into users set ?'
         // 注册身份
-        const identity = '用户'
+        const identity = 'User'
         // // 创建时间
         // const create_time = new Date()
         db.query(sql1,{
