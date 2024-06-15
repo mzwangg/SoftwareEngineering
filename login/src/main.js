@@ -1,7 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 
-import './assets/headtap.css'
 import './assets/style.css'
 
 /* 引入 router */

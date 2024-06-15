@@ -1,5 +1,5 @@
 <template>
-    <div id="device" style="width: 110%; height: 105%;"></div>
+    <div id="device" style="width: 100%; height: 100%;"></div>
 </template>
 
 <script>

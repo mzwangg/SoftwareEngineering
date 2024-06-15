@@ -3,7 +3,7 @@
 
   <div class="mainbox">
 
-    <ul class="clearfix nav1">
+    <ul class="nav1">
       <li style="width: 25%">
         <div class="box">
           <div class="tit">计算机设备信息</div>
@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import HeaderComponent from '../ai-center/HeaderComponent.vue'; // 假设组件存放在components目录下
+import HeaderComponent from '../components/HeaderComponent.vue'; // 假设组件存放在components目录下
 import device from '../data-center/device.vue';
 import ChinaMap from '../data-center/ChinaMap.vue';
 import sensor from '../data-center/sensor.vue';

@@ -1,5 +1,5 @@
 <template>
-  <div id="fishNumberChart" style="width: 110%; height: 105%;"></div>
+  <div id="fishNumberChart" style="width: 100%; height: 100%;"></div>
 </template>
 
 <script>

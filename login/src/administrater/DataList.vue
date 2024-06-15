@@ -1,96 +1,95 @@
 <template>
-    <div>
-        <div class="header">
-            <div class="serchBlock">
-                <input type="text" placeholder="搜索用户">
-                <button @click="startSearch()" style="margin-left: 20px;">搜索</button>
-            </div>
-            <div>
-                <button @click="addDialogVisible = true">添加用户</button>
-                <button @click="showImportDialog = true">导入数据</button>
-                <button @click="showExportDialog = true">导出数据</button>
-            </div>
+    <div class="header">
+        <div class="serchBlock" style="width: 210px;">
+            <input type="text" placeholder="搜索用户" style="margin-left: 10px;">
+            <button @click="startSearch()" style="margin-left: 2px;">搜索</button>
         </div>
-
-        <table class="user-table">
-            <thead>
-                <th style="width: 25%;">账号</th>
-                <th style="width: 25%;">密码</th>
-                <th style="width: 25%;">权限</th>
-                <th style="width: 25%;">操作</th>
-            </thead>
-            <tbody>
-                <UserItem v-for="user in displayedUsers" :key="user.id" :user="user" />
-            </tbody>
-        </table>
-        <Pagination :total="totalUsers" :pageSize="pageSize" @pageChange="handlePageChange" class="pagination " />
-
-        <!-- 增加用户对话框 -->
-        <el-dialog v-model="addDialogVisible" title="增加用户" width="30%">
-            <el-form :model="addForm" label-width="20%">
-                <el-form-item label="用户名">
-                    <el-input v-model="addForm.account" autocomplete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="密码">
-                    <el-input v-model="addForm.password" autocomplete="off" type="password"></el-input>
-                </el-form-item>
-                <el-form-item label="权限">
-                    <el-select v-model="addForm.role" placeholder="请选择">
-                        <el-option label="User" value="User"></el-option>
-                        <el-option label="Admin" value="Admin"></el-option>
-                    </el-select>
-                </el-form-item>
-            </el-form>
-
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="addDialogVisible = false" style="margin:0 20%;">取消</el-button>
-                <el-button type="primary" @click="addUser" style="margin:0 20%;">确定</el-button>
-            </span>
-        </el-dialog>
-
-        <!-- 导入数据对话框 -->
-        <el-dialog title="导入数据" v-model="showImportDialog" width="30%">
-            <el-form>
-                <el-form-item label="选择文件">
-                    <el-upload ref="upload" action="" :http-request="handleFileUpload" :auto-upload="false"
-                        accept=".csv,.xlsx,.txt">
-                        <el-button type="primary" class="left-align">点击上传</el-button>
-                    </el-upload>
-                </el-form-item>
-                <el-form-item label="数据类型">
-                    <el-select v-model="importDataType" placeholder="请选择数据类型">
-                        <el-option label="用户数据" value="type1"></el-option>
-                        <el-option label="鱼类数据" value="type2"></el-option>
-                        <el-option label="水文数据" value="type3"></el-option>
-                    </el-select>
-                </el-form-item>
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="showImportDialog = false">取消</el-button>
-                <el-button type="primary" @click="handleImport">导入</el-button>
-            </div>
-        </el-dialog>
-
-        <!-- 导出数据对话框 -->
-        <el-dialog title="导出数据" v-model="showExportDialog" width="30%">
-            <el-form>
-                <el-form-item label="数据类型">
-                    <el-select v-model="exportDataType" placeholder="请选择数据类型">
-                        <el-option label="用户数据" value="type1"></el-option>
-                        <el-option label="鱼类数据" value="type2"></el-option>
-                        <el-option label="水文数据" value="type3"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="文件名称">
-                    <el-input v-model="exportFileName" placeholder="输入文件名称"></el-input>
-                </el-form-item>
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="showExportDialog = false">取消</el-button>
-                <el-button type="primary" @click="handleExport">导出</el-button>
-            </div>
-        </el-dialog>
+        <div style="width: 250px;">
+            <button @click="addDialogVisible = true">添加用户</button>
+            <button @click="showImportDialog = true">导入数据</button>
+            <button @click="showExportDialog = true">导出数据</button>
+        </div>
     </div>
+
+    <table class="user-table">
+        <thead>
+            <th style="width: 25%;">账号</th>
+            <th style="width: 25%;">密码</th>
+            <th style="width: 25%;">权限</th>
+            <th style="width: 25%;">操作</th>
+        </thead>
+        <tbody>
+            <UserItem v-for="user in displayedUsers" :key="user.id" :user="user" />
+        </tbody>
+    </table>
+
+    <Pagination :total="totalUsers" :pageSize="pageSize" @pageChange="handlePageChange" class="pagination " />
+
+    <!-- 增加用户对话框 -->
+    <el-dialog v-model="addDialogVisible" title="增加用户" width="350px">
+        <el-form :model="addForm" label-width="20%">
+            <el-form-item label="用户名">
+                <el-input v-model="addForm.account" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="密码">
+                <el-input v-model="addForm.password" autocomplete="off" type="password"></el-input>
+            </el-form-item>
+            <el-form-item label="权限">
+                <el-select v-model="addForm.role" placeholder="请选择">
+                    <el-option label="User" value="User"></el-option>
+                    <el-option label="Admin" value="Admin"></el-option>
+                </el-select>
+            </el-form-item>
+        </el-form>
+
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="addDialogVisible = false" style="margin:0 20%;">取消</el-button>
+            <el-button type="primary" @click="addUser" style="margin:0 20%;">确定</el-button>
+        </span>
+    </el-dialog>
+
+    <!-- 导入数据对话框 -->
+    <el-dialog title="导入数据" v-model="showImportDialog" width="350px">
+        <el-form>
+            <el-form-item label="选择文件">
+                <el-upload ref="upload" action="" :http-request="handleFileUpload" :auto-upload="false"
+                    accept=".csv,.xlsx,.txt">
+                    <el-button type="primary" class="left-align">点击上传</el-button>
+                </el-upload>
+            </el-form-item>
+            <el-form-item label="数据类型">
+                <el-select v-model="importDataType" placeholder="请选择数据类型">
+                    <el-option label="用户数据" value="type1"></el-option>
+                    <el-option label="鱼类数据" value="type2"></el-option>
+                    <el-option label="水文数据" value="type3"></el-option>
+                </el-select>
+            </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="showImportDialog = false">取消</el-button>
+            <el-button type="primary" @click="handleImport">导入</el-button>
+        </div>
+    </el-dialog>
+
+    <!-- 导出数据对话框 -->
+    <el-dialog title="导出数据" v-model="showExportDialog" width="350px">
+        <el-form>
+            <el-form-item label="数据类型">
+                <el-select v-model="exportDataType" placeholder="请选择数据类型">
+                    <el-option label="用户数据" value="type1"></el-option>
+                    <el-option label="鱼类数据" value="type2"></el-option>
+                    <el-option label="水文数据" value="type3"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="文件名称">
+                <el-input v-model="exportFileName" placeholder="输入文件名称"></el-input>
+            </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="showExportDialog = false">取消</el-button>
+            <el-button type="primary" @click="handleExport">导出</el-button>
+        </div>
+    </el-dialog>
 </template>
 
 <script>
@@ -193,12 +192,12 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 20px 20px;
+    margin: 20px 0px;
 }
 
 .header button {
-    padding: 10px 20px;
-    margin-right: 10px;
+    padding: 10px 10px;
+    margin-right: 2px;
     background-color: #157cf1;
     color: #fff;
     border: none;
@@ -213,7 +212,7 @@ export default {
 
 input[type="text"] {
     padding: 10px;
-    width: 200px;
+    width: 140px;
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -270,5 +269,20 @@ input[type="text"]:focus {
     text-align: center;
     justify-content: center;
     margin: 10px 0;
+}
+
+@media (max-width: 768px) {
+    .pagination button {
+        margin: 0 5px;
+        padding: 5px 0px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background-color: #fff;
+        cursor: pointer;
+    }
+
+    input[type="text"] {
+        width: 100px;
+    }
 }
 </style>

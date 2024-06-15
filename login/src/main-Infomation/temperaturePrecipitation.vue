@@ -1,5 +1,5 @@
 <template>
-    <div id="temperaturePrecipitation" style="width: 110%; height: 100%;"></div>
+    <div id="temperaturePrecipitation" style="width: 100%; height: 100%;"></div>
 </template>
 <script>
 import * as echarts from 'echarts';
@@ -20,7 +20,7 @@ export default {
     }
   },
   grid: {
-    right: '30%'
+    right: '110px'
   },
   legend: {
       data: ['蒸发量', '降水量', '温度'],
@@ -58,7 +58,7 @@ export default {
         }
       },
       axisLabel: {
-        formatter: '{value} ml'
+        formatter: '{value}ml',
       }
     },
     {
@@ -76,12 +76,12 @@ export default {
         }
       },
       axisLabel: {
-        formatter: '{value} ml'
+        formatter: '{value}ml'
       }
     },
     {
       type: 'value',
-      name: '温度',
+      name: '温度(°C)',
       position: 'left',
       alignTicks: true,
       axisLine: {
@@ -90,9 +90,6 @@ export default {
           color: colors[2]
         }
       },
-      axisLabel: {
-        formatter: '{value} °C'
-      }
     }
   ],
   series: [

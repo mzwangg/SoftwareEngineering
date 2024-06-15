@@ -1,19 +1,19 @@
-
 <template>
   <HeaderComponent />
 
   <div class="mainbox">
 
-    <ul class="clearfix nav1">
+    <ul class="nav1">
       <li style="width: 30%">
         <div class="box">
           <div class="tit">安全评分</div>
-          <div class="boxnav" style="height: 150px">
-            <div class="pfcontent">
-              <div class="leftBox" style="height: 100%;">
-                <img src="../ai-center/img/aqdj.png" />
-                <span>安全等级</span>
-              </div>
+          <div class="boxnav" style="height: 150px; flex-direction: row;">
+            <div class="leftBox"
+              style="height: 60%;width: 50%;display: flex;flex-direction:column;align-items: center;justify-content: center;">
+              <img src="../ai-center/img/aqdj.png" style="width: 50%" />
+              <span>安全等级</span>
+            </div>
+            <div style="width: 50%;">
               <EchartAqpf />
             </div>
           </div>
@@ -37,7 +37,8 @@
       <li style="width: 40%">
         <div class="box">
           <div class="tit">监控视频</div>
-          <div class="boxnav" style="height: 320px;">
+          <div class="boxnav"
+            style="height: 320px;display: flex; justify-content: center;align-items: center;flex-direction: column;">
             <VideoControl />
           </div>
         </div>
@@ -45,29 +46,33 @@
         <div class="box">
           <div class="tit">识别结果</div>
           <div class="boxnav" style="height: 195px;">
-            <div class="fish-block">
-              <h3>编号</h3>
-              <p>12345</p>
+            <div style="width: 100%; display: flex; align-items: center; justify-content: center;">
+              <div class="fish-block">
+                <h3>编号</h3>
+                <p>12345</p>
+              </div>
+              <div class="fish-block">
+                <h3>鱼种</h3>
+                <p>金鱼</p>
+              </div>
+              <div class="fish-block">
+                <h3>体长</h3>
+                <p>10cm</p>
+              </div>
             </div>
-            <div class="fish-block">
-              <h3>鱼种</h3>
-              <p>金鱼</p>
-            </div>
-            <div class="fish-block">
-              <h3>体长</h3>
-              <p>10cm</p>
-            </div>
-            <div class="fish-block">
-              <h3>体重</h3>
-              <p>50g</p>
-            </div>
-            <div class="fish-block">
-              <h3>是否患病</h3>
-              <p>否</p>
-            </div>
-            <div class="fish-block">
-              <h3>是否异常</h3>
-              <p>是</p>
+            <div style="width: 100%; display: flex; align-items: center; justify-content: center;">
+              <div class="fish-block">
+                <h3>体重</h3>
+                <p>50g</p>
+              </div>
+              <div class="fish-block">
+                <h3>患病</h3>
+                <p>否</p>
+              </div>
+              <div class="fish-block">
+                <h3>异常</h3>
+                <p>是</p>
+              </div>
             </div>
           </div>
         </div>
@@ -124,8 +129,8 @@
 </template>
 
 <script>
-import HeaderComponent from '../ai-center/HeaderComponent.vue';
-import VideoControl from '@/ai-center/VideoControl.vue';
+import HeaderComponent from '../components/HeaderComponent.vue';
+import VideoControl from '@/components/VideoControl.vue';
 import AiControl from '@/ai-center/AiControl.vue';
 import EchartAqpf from '@/ai-center/EchartAqpf.vue';
 
@@ -143,7 +148,82 @@ export default {
 
 <style scoped>
 .gnlb li {
-    width: 46%;
-    margin: 3% 2%;
+  width: 46%;
+  margin: 3% 2%;
+}
+
+.fish-block {
+    width: calc(33.33% - 26.66px);
+    height: 70px;
+    margin: 10px;
+    padding: 20px;
+    background-color: #2f649f;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: inline-block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.fish-block:hover {
+    background-color: #1a8bc2
+}
+
+.fish-block h3 {
+    margin-top: 0;
+    font-size: 18px;
+    color: #fff;
+}
+
+.fish-block p {
+    margin-bottom: 0;
+    font-size: 16px;
+    color: #fff;
+}
+
+.weather {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+    height: 100%;
+    align-items: center;
+}
+
+.wt2 {
+    display: flex;
+    align-items: center;
+}
+
+.wt2 p {
+    font-size: 28px;
+    padding-left: 10px;
+    line-height: 100%;
+}
+
+.wt2 p sup {
+    font-size: 14px;
+}
+
+.wt1 span {
+    font-size: 12px;
+}
+
+.wt1 img {
+    width: 36px;
+}
+
+.wt03 p {
+    line-height: 140%;
+    font-size: 14px;
+}
+
+.wt03 p span {
+    display: inline-block;
+    width: 70px;
+    text-align: right;
+    opacity: .6;
 }
 </style>

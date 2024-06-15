@@ -66,16 +66,6 @@ a:hover {
     text-decoration: none !important
 }
 
-.clearfix:after,
-.clearfix:before {
-    display: table;
-    content: " "
-}
-
-.clearfix:after {
-    clear: both
-}
-
 .pulll_left {
     float: left;
 }
@@ -86,82 +76,6 @@ a:hover {
 
 i {
     font-style: normal;
-}
-
-.head {
-    position: relative;
-    height: 90px;
-    margin: 0 15px;
-    padding-right: 60px;
-}
-
-.head h1 {
-    width: 44%;
-    font-size: 30px;
-    text-align: center;
-    line-height: 90px;
-    color: #daf9ff;
-}
-
-.head .menu {
-    width: 28%
-}
-
-.head .menu ul {
-    font-size: 0;
-}
-
-.head .menu1 ul {
-    text-align: right
-}
-
-.head .menu2 ul {
-    text-align: left
-}
-
-.head .menu li {
-    display: inline-block;
-    position: relative;
-    margin: 25px 0;
-}
-
-.head .menu li a {
-    display: block;
-    font-size: 14px;
-    color: #fff;
-    line-height: 40px;
-    padding: 0 15px;
-}
-
-.head .home {
-    position: absolute;
-    left: 0;
-    line-height: 90px;
-}
-
-.head .home a * {
-    display: inline-block;
-    vertical-align: middle;
-}
-
-.head .time {
-    position: absolute;
-    right: 0;
-    line-height: 90px;
-}
-
-
-
-.head .menu li a:hover {
-    color: #f4e925;
-}
-
-.menu li a:hover:before,
-.menu li a:hover:after,
-.menu li:hover:before,
-.menu li:hover:after {
-    border-color: #f4e925;
-    opacity: 1;
 }
 
 .mainbox {
@@ -222,13 +136,10 @@ i {
 }
 
 .boxnav {
-    padding: 10px;
-}
-
-.nav2 {}
-
-.nav2 li:first-child {
-    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .nav2 li {
@@ -236,86 +147,6 @@ i {
     border-left: 1px solid rgba(7, 118, 181, .2);
     height: 240px;
     padding: 0 10px 10px 10px;
-}
-
-.ftechart {
-    height: 200px;
-    ;
-}
-
-
-@font-face {
-    font-family: electronicFont;
-    src: url(../font/DS-DIGIT.TTF)
-}
-
-.table1 th {
-    border-bottom: 1px solid #407abd;
-    font-size: 14px;
-    text-align: center;
-    padding: 6px 0;
-    color: rgba(255, 255, 255, .8)
-}
-
-.table1 td {
-    border-bottom: 1px dotted#407abd;
-    font-size: 12px;
-    padding: 6px 0;
-    text-align: center;
-    color: rgba(255, 255, 255, .6)
-}
-
-.table1 tr:last-child td {
-    border: none;
-}
-
-.mapc {
-    background: url(../images/bg3.png) no-repeat center center;
-    background-size: 100% 100%
-}
-
-.map {
-    position: relative;
-    height: 100%;
-    padding-top: 100px;
-}
-
-.map img {}
-
-.mapnav {
-    position: absolute;
-    z-index: 100;
-    left: 15px;
-    top: 10px;
-}
-
-.mapnav div {
-    background: url(../images/bg1.png) no-repeat;
-    background-size: 100% auto;
-    width: 150px;
-    text-align: center;
-    padding: 15px 0;
-    line-height: 120%;
-}
-
-.mapnav div span {
-    font-size: 14px;
-    opacity: .6
-}
-
-.mapnav div p {
-    font-size: 30px;
-    color: #5ee6ff;
-    text-shadow: 0 0 5px #5ee6ff;
-    font-weight: bold;
-    padding-top: 5px;
-    ;
-    font-family: electronicFont;
-}
-
-.mapnav li {
-    float: left;
-    margin-right: 6px;
 }
 
 .gnlb {
@@ -381,114 +212,6 @@ i {
     border-bottom: 2px solid #1a8bc2;
     bottom: -2px;
     border-radius: 2px;
-}
-
-
-.weather {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 30px;
-    height: 100%;
-    align-items: center;
-}
-
-.wt2 {
-    display: flex;
-    align-items: center;
-}
-
-.wt2 p {
-    font-size: 32px;
-    padding-left: 10px;
-    line-height: 100%;
-}
-
-.wt2 p sup {
-    font-size: 14px;
-}
-
-.wt1 span {
-    font-size: 12px;
-}
-
-.wt1 img {
-    width: 36px;
-}
-
-.wt03 p {
-    line-height: 140%;
-    font-size: 14px;
-}
-
-.wt03 p span {
-    display: inline-block;
-    width: 70px;
-    text-align: right;
-    opacity: .6;
-}
-
-#videoPlayer {
-    width: 100%;
-    height: 92%;
-    display: block;
-    /* 确保视频不会占用额外空间 */
-}
-
-.videoButton {
-    height: 8%;
-    width: 10%;
-    padding: 10px 2%;
-    border: none;
-    background-color: transparent;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.videoButton:hover {
-    background-color: #1a8bc2
-}
-
-.fish-block {
-    width: calc(33.33% - 26.66px);
-    height: 70px;
-    margin: 10px;
-    padding: 20px;
-    background-color: #2f649f;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    display: inline-block;
-}
-
-.fish-block:hover {
-    background-color: #1a8bc2
-}
-
-.fish-block h3 {
-    margin-top: 0;
-    font-size: 18px;
-    color: #fff;
-}
-
-.fish-block p {
-    margin-bottom: 0;
-    font-size: 16px;
-    color: #fff;
-}
-
-.pfcontent {
-    display: flex;
-    justify-content: center;
-    margin-top: 5%;
-}
-
-.pfcontent .leftBox {
-    width: 30%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
 }
 
 .message {
@@ -563,18 +286,95 @@ input:checked+.slider:before {
 
 .button {
     display: block;
+    width: 150px;
     padding: 10px;
-    margin: 0 40px;
+    margin: 0 10%;
     background-color: #2f649f;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
-    /* text-align: center; */
     transition: background-color 0.3s;
 }
 
 .button:hover {
     background-color: #1a8bc2;
 }
+
+#backcont{
+    background-image: url(../assets/follow_me.png);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* min-height: 100vh; */
+    width: 100vw;
+    height: 100vh;
+}
+
+.meituan-content{
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.login-cont,.register-cont{
+    width: 500px;
+    height: 400px;
+    background: #ffffff;
+    opacity: 80%;
+    border-radius: 5px;
+}
+
+.meituan-title{
+    text-align: center;
+    color: #000000;
+    font-size: 30px;
+    padding-top: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.meituan-user{
+    width: 360px;
+    margin: 0 auto;
+    padding-top: 30px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.meituan-user p{
+    width: 60px;
+    color: #000000;
+    font-size: 16px;
+}
+
+.meituan-btn{
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px auto 0 auto;
+    font-size: 16px;
+}
+
+.yanzheng{
+    width: 300px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000000;
+    font-size: 16;
+}
+
+@media screen and (max-width: 768px) {
+    .nav1 > li {
+      width: 100% !important;
+    }
+
+    .login-cont,.register-cont{
+        width: 100vw;
+    }
+  }

@@ -1,5 +1,5 @@
 <template>
-    <div id="fishTypeChart" style="width: 110%; height: 100%;"></div>
+    <div id="fishTypeChart" style="width: 100%; height: 100%;"></div>
 </template>
 
 <script>
@@ -28,8 +28,8 @@ export default {
   series: [
     {
       type: "pie",
-      radius: "80%",
-      left: '10%', // 将饼形图向右移动
+      radius: "60%",
+      left: '20%', // 将饼形图向右移动
       
       data: [
         {

@@ -3,7 +3,7 @@
         <td>{{ user.account }}</td>
         <td>******</td>
         <td>{{ user.role }}</td>
-        <td>
+        <td class="buttons">
             <button @click="showEditDialog">修改</button>
             <button @click="showDeleteDialog">删除</button>
         </td>
@@ -119,5 +119,18 @@ td button:hover {
 .dialog-footer {
     display: flex;
     justify-content: center;
+}
+
+@media (max-width: 768px) {
+    td button {
+            padding: 2px 2px;
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 0 2px;
+        }
 }
 </style>

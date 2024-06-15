@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <img src="./2.png" style="width: 300px; height: 180px;">
-  </div>
+  <img src="./2.png" style="width: 90%; height: 98%;">
 </template>
 
 <script>

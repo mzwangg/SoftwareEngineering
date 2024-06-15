@@ -1,5 +1,5 @@
 <template>
-    <div id="hydrometeorology" style="width: 100%; height: 105%;"></div>
+    <div id="hydrometeorology" style="width: 100%; height: 90%;"></div>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-    <div style="height: 240px; display: flex; flex-direction: column; align-items: center;">
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content:center; height: 100%;">
         <div class="function">
             <label>摄像头：</label>
             <label class="switch">
@@ -8,7 +8,7 @@
             </label>
         </div>
         <div class="function">
-            <label>&nbsp;照明灯：</label>
+            <label>照明灯：</label>
             <label class="switch">
                 <input type="checkbox" v-model="waterQuality">
                 <span class="slider"></span>

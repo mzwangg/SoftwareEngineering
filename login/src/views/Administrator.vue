@@ -1,23 +1,15 @@
 <template>
   <HeaderComponent />
 
-  <div class="mainbox">
-    <ul class="clearfix nav1">
-      <li style="width: 80%; margin-left:10%;">
-
-        <div class="box">
-          <div class="tit">数据管理</div>
-
-          <DataList />
-
-        </div>
-      </li>
-    </ul>
+  <div class="box">
+    <div class="tit">数据管理</div>
+    <DataList />
   </div>
+
 </template>
 
 <script>
-import HeaderComponent from '../ai-center/HeaderComponent.vue';
+import HeaderComponent from '../components/HeaderComponent.vue';
 import DataList from '../administrater/DataList.vue';
 
 export default {
@@ -28,3 +20,17 @@ export default {
 };
 
 </script>
+
+<style scoped>
+.box{
+  width: 80%;
+  margin-left:10%;
+}
+
+@media (max-width: 768px){
+  .box {
+      margin: 0px 5px;
+      width: 100%;
+    }
+}
+</style>

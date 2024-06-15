@@ -1,5 +1,5 @@
 <template>
-    <div class="boxnav" style="height: 320px;">
+    <div style="height: 100%;width: 100%;">
         <!-- 用于显示ECharts图表的div -->
         <div id="fishWeightChart" style="width: 100%; height: 85%;"></div>
         <!-- 添加按钮选项，用于选择不同的鱼类 -->
@@ -43,7 +43,7 @@ export default {
             var option = {
                 xAxis: {
                     type: 'value',
-                    name: '重量（克）',
+                    name: '重量(g)',
                     nameTextStyle: {
                         color: '#fff' // 横轴字体颜色为白色
                     },
@@ -72,7 +72,9 @@ export default {
                     },
                 },
                 grid: {
-                    top: '20%' // 设置图表距离顶部的距离
+                    top: '20%',
+                    bottom: '20%',
+                    right: '18%'
                 },
                 series: [{
                     data: selectedFishWeights,
@@ -92,8 +94,8 @@ export default {
 <style scoped>
 .fishButton {
     height: 8%;
-    width: 15%;
-    padding: 10px 2%;
+    width: 50px;
+    padding: 10px 2px;
     margin-right: 10px;
     border: none;
     background-color: #2f649f;

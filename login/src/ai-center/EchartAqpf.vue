@@ -1,5 +1,5 @@
 <template>
-    <div id="echartAqpf" style="width: 30%; height: 100%;"></div>
+    <div id="echartAqpf" style="width: 100%; height: 100%;"></div>
 </template>
 
 <script>
