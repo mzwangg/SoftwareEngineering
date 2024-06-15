@@ -95,6 +95,9 @@
 <script>
 import UserItem from './UserItem.vue';
 import Pagination from './Pagination.vue';
+import axios from 'axios';
+import { getUsers } from '../api/users.js';
+import { addUser } from '../api/users.js';
 
 export default {
     components: {
@@ -104,19 +107,19 @@ export default {
     data() {
         return {
             users: [
-                { id: 1, account: 'user1', password: '******', role: 'Admin' },
-                { id: 2, account: 'user2', password: '******', role: 'User' },
-                { id: 3, account: 'user3', password: '******', role: 'User' },
-                { id: 4, account: 'user4', password: '******', role: 'User' },
-                { id: 5, account: 'user5', password: '******', role: 'User' },
-                { id: 6, account: 'user6', password: '******', role: 'User' },
-                { id: 7, account: 'user7', password: '******', role: 'User' },
-                { id: 8, account: 'user8', password: '******', role: 'User' },
-                { id: 9, account: 'user9', password: '******', role: 'User' },
-                { id: 10, account: 'user10', password: '******', role: 'User' },
-                { id: 11, account: 'user11', password: '******', role: 'User' },
-                { id: 12, account: 'user12', password: '******', role: 'User' },
-                // 其他示例用户数据...
+                // { id: 1, account: 'user1', password: '******', role: 'Admin' },
+                // { id: 2, account: 'user2', password: '******', role: 'User' },
+                // { id: 3, account: 'user3', password: '******', role: 'User' },
+                // { id: 4, account: 'user4', password: '******', role: 'User' },
+                // { id: 5, account: 'user5', password: '******', role: 'User' },
+                // { id: 6, account: 'user6', password: '******', role: 'User' },
+                // { id: 7, account: 'user7', password: '******', role: 'User' },
+                // { id: 8, account: 'user8', password: '******', role: 'User' },
+                // { id: 9, account: 'user9', password: '******', role: 'User' },
+                // { id: 10, account: 'user10', password: '******', role: 'User' },
+                // { id: 11, account: 'user11', password: '******', role: 'User' },
+                // { id: 12, account: 'user12', password: '******', role: 'User' },
+                // // 其他示例用户数据...
             ],
             currentPage: 1,
             pageSize: 8,
@@ -147,10 +150,22 @@ export default {
         handlePageChange(page) {
             this.currentPage = page;
         },
-        addUser() {
-            // 编辑用户逻辑
-            console.log('Added user:', this.addForm);
-            this.addDialogVisible = false;
+        async addUser() {
+            // // 编辑用户逻辑
+            // console.log('Added user:', this.addForm);
+            // this.addDialogVisible = false;
+
+            try {
+                // 发送POST请求添加用户
+                const response = await addUser(this.addForm);
+                console.log('User added:', response.data);
+                this.$message.success('用户添加成功');
+                this.addDialogVisible = false;
+                this.fetchUsers();
+            } catch (error) {
+                console.error('Error adding user:', error);
+                this.$message.error('添加用户失败');
+            }
         },
         handleFileUpload(file) {
             // 处理文件上传
@@ -182,7 +197,19 @@ export default {
             URL.revokeObjectURL(url);
 
             this.showExportDialog = false;
+        },
+        async fetchUsers() {
+            try {
+                const response = await getUsers();
+                this.users = response.data;
+            } catch (error) {
+                this.$message.error('无法获取用户数据');
+                console.error('Error fetching users:', error);
+            }
         }
+    },
+    mounted() {
+        this.fetchUsers();
     }
 };
 </script>

@@ -40,7 +40,9 @@ app.use(jwt({
 
 // 引入路由模块
 const loginRouter = require('./router/login')
+const usersRouter = require('./router/users')
 app.use('/api', loginRouter)
+app.use('/api', usersRouter);
 
 // 对不符合joi规则的情况进行报错
 app.use((req,res,next)=>{

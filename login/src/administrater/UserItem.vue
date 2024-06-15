@@ -43,6 +43,12 @@
 </template>
 
 <script>
+import UserItem from './UserItem.vue';
+import Pagination from './Pagination.vue';
+import axios from 'axios';
+import { updateUser } from '../api/users.js';
+import { deleteUser } from '../api/users.js';
+
 export default {
     props: {
         user: {
@@ -73,15 +79,36 @@ export default {
         showDeleteDialog() {
             this.deleteDialogVisible = true;
         },
-        editUser() {
-            // 编辑用户逻辑
-            console.log('Edited user:', this.editForm);
-            this.editDialogVisible = false;
+        async editUser() {
+            // // 编辑用户逻辑
+            // console.log('Edited user:', this.editForm);
+            // this.editDialogVisible = false;
+            try {
+                const response = await updateUser(this.editForm);
+                console.log('User updated:', response.data);
+                this.$message.success('用户信息更新成功');
+                this.editDialogVisible = false;
+                // 可选：重新加载用户数据或刷新页面
+                window.location.reload();
+            } catch (error) {
+                console.error('Error updating user:', error);
+                this.$message.error('更新用户信息失败');
+            }
         },
-        deleteUser() {
-            // 删除用户逻辑
-            console.log('Deleted user:', this.user);
-            this.deleteDialogVisible = false;
+       async deleteUser() {
+            // // 删除用户逻辑
+            // console.log('Deleted user:', this.user);
+            // this.deleteDialogVisible = false;
+            try {
+                const response = await deleteUser(this.user.account);
+                console.log('User deleted:', response.data);
+                this.$message.success('用户删除成功');
+                this.editDialogVisible = false;
+                window.location.reload();
+            } catch (error) {
+                console.error('Error deleting user:', error);
+                this.$message.error('删除用户失败');
+            }
         }
     }
 };

@@ -101,4 +101,3 @@ exports.login = (req,res) =>{
         })
     })
 }
-
