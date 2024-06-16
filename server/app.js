@@ -5,6 +5,14 @@ const app = express();
 // 导入bodyparser
 var bodyParser = require('body-parser');
 
+const multer = require('multer');
+const csv = require('csv-parser');
+const xlsx = require('xlsx');
+const fs = require('fs');
+const path = require('path');
+const mysql = require('mysql');
+const upload = multer({ dest: 'uploads/' });
+
 //导入cors
 const cors = require('cors');
 //全局挂载

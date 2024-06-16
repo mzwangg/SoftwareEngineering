@@ -98,6 +98,8 @@ import Pagination from './Pagination.vue';
 import axios from 'axios';
 import { getUsers } from '../api/users.js';
 import { addUser } from '../api/users.js';
+import { uploadfile } from '../api/users.js';
+import { exportfile } from '../api/users.js';
 
 export default {
     components: {
@@ -167,36 +169,75 @@ export default {
                 this.$message.error('添加用户失败');
             }
         },
-        handleFileUpload(file) {
-            // 处理文件上传
-            console.log('Uploaded file:', file.file)
+        async handleFileUpload(file) {
+            // // 处理文件上传
+            // console.log('Uploaded file:', file.file)
+            try{
+                const formData = new FormData();
+                formData.append('file', file.file);
+                formData.append('type', this.importDataType);
+                const response = await uploadfile(formData);
+                console.log('file uploaded:', response.data);
+                this.$message.success('文件上传成功');
+                this.addDialogVisible = false;
+            } catch (error) {
+                console.error('Error uploading file:', error);
+                this.$message.error('上传文件失败');
+            }
         },
         handleImport() {
-            // 处理导入逻辑
-            console.log('Importing file with type:', this.importDataType)
-            this.showImportDialog = false
+            // // 处理导入逻辑
+            // console.log('Importing file with type:', this.importDataType)
+            // this.showImportDialog = false
+            this.$refs.upload.submit();
         },
-        handleExport() {
-            if (!this.exportFileName) {
-                this.$message.error('请提供文件名称');
-                return;
+        async handleExport() {
+            // if (!this.exportFileName) {
+            //     this.$message.error('请提供文件名称');
+            //     return;
+            // }
+
+            // // 模拟导出数据
+            // const data = { name: '示例数据', value: 12345 };
+            // const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            // const url = URL.createObjectURL(blob);
+
+            // const link = document.createElement('a');
+            // link.href = url;
+            // link.download = this.exportFileName + '.json';
+            // document.body.appendChild(link);
+            // link.click();
+            // document.body.removeChild(link);
+
+            // URL.revokeObjectURL(url);
+
+            // this.showExportDialog = false;
+            try {
+                // 调用后端导出文件 API
+                const response = await exportfile(this.exportDataType);
+                console.log('Exported data:', response.data);
+
+                // 根据数据类型选择文件名称和格式
+                let fileName = this.exportFileName;
+                let fileExt = 'json';
+
+                // 生成文件内容
+                const blob = new Blob([JSON.stringify(response.data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+
+                // 创建并下载文件
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `${fileName}.${fileExt}`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                URL.revokeObjectURL(url);
+            } catch (error) {
+                console.error('Error exporting data:', error);
+                this.$message.error('导出数据失败');
             }
-
-            // 模拟导出数据
-            const data = { name: '示例数据', value: 12345 };
-            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = this.exportFileName + '.json';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-
-            URL.revokeObjectURL(url);
-
-            this.showExportDialog = false;
         },
         async fetchUsers() {
             try {
