@@ -23,14 +23,6 @@ router.get('/users', (req, res) => {
 
 // 添加用户数据
 router.post('/users', (req, res) => {
-<<<<<<< Updated upstream
-    const { account, password, role } = req.body;
-    const sql = 'insert into users set ?';
-    db.query(sql, {
-            account,
-            password,
-            role
-=======
     const { account, password, identity } = req.body;
     const jmpassword = bcrypt.hashSync(password,10);
     const sql = 'insert into users set ?';
@@ -38,7 +30,6 @@ router.post('/users', (req, res) => {
             account,
             jmpassword,
             identity
->>>>>>> Stashed changes
         }, (err, result) => {
         if (err) {
             console.error(err);
@@ -51,18 +42,6 @@ router.post('/users', (req, res) => {
 
 // 修改用户数据
 router.put('/users', (req, res) => {
-<<<<<<< Updated upstream
-    const { account, password, role } = req.body;
-    const sql = 'UPDATE users SET password=?, role=? WHERE account=?';
-    db.query(sql, [password, role, account], (err, result) => {
-        if (err) {
-            console.error(err);
-            res.status(500).json({ error: 'Failed to update user' });
-        } else {
-            res.json({ message: 'User updated successfully', id: result.insertId });
-        }
-    });
-=======
     const { account, password, identity } = req.body;
     if(password){
         const jmpassword = bcrypt.hashSync(password,10);
@@ -86,7 +65,6 @@ router.put('/users', (req, res) => {
             }
         });
     }
->>>>>>> Stashed changes
 });
 
 // 删除用户
