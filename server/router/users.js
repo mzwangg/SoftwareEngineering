@@ -3,6 +3,10 @@
 const express = require('express');
 const db = require('../db'); // 导入你的 MySQL 数据库连接池
 const router = express.Router();
+const multer = require('multer'); // 处理文件上传的中间件
+const upload = multer({ dest: 'uploads/' }); // 设置文件上传目录
+const csv = require('csv-parser'); // 解析 CSV 文件的库
+const xlsx = require('xlsx'); // 解析 Excel 文件的库
 
 // 获取所有用户数据
 router.get('/users', (req, res) => {
@@ -20,10 +24,11 @@ router.get('/users', (req, res) => {
 // 添加用户数据
 router.post('/users', (req, res) => {
     const { account, password, identity } = req.body;
+    const jmpassword = bcrypt.hashSync(password,10);
     const sql = 'insert into users set ?';
     db.query(sql, {
             account,
-            password,
+            jmpassword,
             identity
         }, (err, result) => {
         if (err) {
@@ -38,15 +43,28 @@ router.post('/users', (req, res) => {
 // 修改用户数据
 router.put('/users', (req, res) => {
     const { account, password, identity } = req.body;
-    const sql = 'UPDATE users SET password=?, identity=? WHERE account=?';
-    db.query(sql, [password, identity, account], (err, result) => {
-        if (err) {
-            console.error(err);
-            res.status(500).json({ error: 'Failed to update user' });
-        } else {
-            res.json({ message: 'User updated successfully', id: result.insertId });
-        }
-    });
+    if(password){
+        const jmpassword = bcrypt.hashSync(password,10);
+        const sql = 'UPDATE users SET password=?, identity=? WHERE account=?';
+        db.query(sql, [jmpassword, identity, account], (err, result) => {
+            if (err) {
+                console.error(err);
+                res.status(500).json({ error: 'Failed to update user' });
+            } else {
+                res.json({ message: 'User updated successfully', id: result.insertId });
+            }
+        });
+    }else{
+        const sql = 'UPDATE users SET identity=? WHERE account=?';
+        db.query(sql, [identity, account], (err, result) => {
+            if (err) {
+                console.error(err);
+                res.status(500).json({ error: 'Failed to update user' });
+            } else {
+                res.json({ message: 'User updated successfully', id: result.insertId });
+            }
+        });
+    }
 });
 
 // 删除用户
