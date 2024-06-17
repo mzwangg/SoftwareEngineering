@@ -1,7 +1,7 @@
 <template>
     <div class="header">
         <div class="serchBlock" style="width: 210px;">
-            <input type="text" placeholder="搜索用户" style="margin-left: 10px;">
+            <input type="text" placeholder="搜索用户" v-model="searchQuery" style="margin-left: 10px;">
             <button @click="startSearch()" style="margin-left: 2px;">搜索</button>
         </div>
         <div style="width: 250px;">
@@ -95,6 +95,7 @@ import { getUsers } from '../api/users.js';
 import { addUser } from '../api/users.js';
 import { uploadfile } from '../api/datas.js';
 import { downloadfile } from '../api/datas.js';
+import { searchusers } from '../api/users.js';
 
 export default {
     components: {
@@ -121,7 +122,8 @@ export default {
             exportForm: {
                 exportDataType: '',
                 exportFileName: '',
-            }
+            },
+            searchQuery: ''
         };
     },
     computed: {
@@ -196,6 +198,23 @@ export default {
             } catch (error) {
                 this.$message.error('无法获取用户数据');
                 console.error('Error fetching users:', error);
+            }
+        },
+
+        async startSearch() {
+            try {
+                this.currentPage = 1; // 搜索时重置到第一页
+                if(this.searchQuery){
+                    // 发送POST请求添加用户
+                    const response = await searchusers(this.searchQuery);
+                    this.users = response.data;
+                }else{
+                    const response = await getUsers();
+                    this.users = response.data;
+                }
+            } catch (error) {
+                console.error('Error searching user:', error);
+                this.$message.error('搜索用户失败');
             }
         }
     },

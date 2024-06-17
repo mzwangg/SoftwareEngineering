@@ -44,9 +44,15 @@ export const updateUser = (userData) => {
 };
 
 export const deleteUser = (account) => {
-
     return instance({
         url: `/api/users/${account}`,
         method: "DELETE",
+    });
+};
+
+export const searchusers = (account) => {
+    return instance({
+        url: `/api/search/${account}`,
+        method: "GET",
     });
 };
