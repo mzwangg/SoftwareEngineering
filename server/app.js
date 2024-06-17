@@ -5,14 +5,6 @@ const app = express();
 // 导入bodyparser
 var bodyParser = require('body-parser');
 
-const multer = require('multer');
-const csv = require('csv-parser');
-const xlsx = require('xlsx');
-const fs = require('fs');
-const path = require('path');
-const mysql = require('mysql');
-const upload = multer({ dest: 'uploads/' });
-
 //导入cors
 const cors = require('cors');
 //全局挂载
@@ -47,9 +39,11 @@ app.use(jwt({
 }))
 
 // 引入路由模块
-const loginRouter = require('./router/login')
-const usersRouter = require('./router/users')
-app.use('/api', loginRouter)
+const loginRouter = require('./router/login');
+const usersRouter = require('./router/users');
+const datasRouter = require('./router/datas');
+app.use('/api', datasRouter);
+app.use('/api', loginRouter);
 app.use('/api', usersRouter);
 
 // 对不符合joi规则的情况进行报错

@@ -1,12 +1,7 @@
-// router/users.js
-
 const express = require('express');
 const db = require('../db'); // 导入你的 MySQL 数据库连接池
 const router = express.Router();
-const multer = require('multer'); // 处理文件上传的中间件
-const upload = multer({ dest: 'uploads/' }); // 设置文件上传目录
-const csv = require('csv-parser'); // 解析 CSV 文件的库
-const xlsx = require('xlsx'); // 解析 Excel 文件的库
+const bcrypt = require('bcrypt');
 
 // 获取所有用户数据
 router.get('/users', (req, res) => {
@@ -24,13 +19,13 @@ router.get('/users', (req, res) => {
 // 添加用户数据
 router.post('/users', (req, res) => {
     const { account, password, identity } = req.body;
-    const jmpassword = bcrypt.hashSync(password,10);
+    const jmpassword = bcrypt.hashSync(password, 10);
     const sql = 'insert into users set ?';
     db.query(sql, {
-            account,
-            jmpassword,
-            identity
-        }, (err, result) => {
+        account,
+        password: jmpassword,
+        identity
+    }, (err, result) => {
         if (err) {
             console.error(err);
             res.status(500).json({ error: 'Failed to add user' });
@@ -43,8 +38,8 @@ router.post('/users', (req, res) => {
 // 修改用户数据
 router.put('/users', (req, res) => {
     const { account, password, identity } = req.body;
-    if(password){
-        const jmpassword = bcrypt.hashSync(password,10);
+    if (password) {
+        const jmpassword = bcrypt.hashSync(password, 10);
         const sql = 'UPDATE users SET password=?, identity=? WHERE account=?';
         db.query(sql, [jmpassword, identity, account], (err, result) => {
             if (err) {
@@ -54,7 +49,7 @@ router.put('/users', (req, res) => {
                 res.json({ message: 'User updated successfully', id: result.insertId });
             }
         });
-    }else{
+    } else {
         const sql = 'UPDATE users SET identity=? WHERE account=?';
         db.query(sql, [identity, account], (err, result) => {
             if (err) {
@@ -81,79 +76,79 @@ router.delete('/users/:account', (req, res) => {
     });
 });
 
-router.post('/upload', upload.single('file'), (req, res) => {
-    const file = req.body.file;
-    const importDataType = req.body.type;
+// router.post('/upload', upload.single('file'), (req, res) => {
+//     const file = req.file;
+//     const importDataType = req.body.type;
 
-    if (!file) {
-        return res.status(400).send('No file uploaded');
-    }
+//     if (!file) {
+//         return res.status(400).send('No file uploaded');
+//     }
 
-    const filePath = path.join(__dirname, file.path);
-    const fileExt = path.extname(file.originalname);
+//     const filePath = path.join(__dirname, file.path);
+//     const fileExt = path.extname(file.originalname).toLowerCase();
 
-    if (fileExt === '.csv') {
-        importCsvData(filePath, importDataType, res);
-    } else if (fileExt === '.xlsx') {
-        importExcelData(filePath, importDataType, res);
-    } else {
-        return res.status(400).send('Unsupported file type');
-    }
-});
+//     if (fileExt === '.csv') {
+//         importCsvData(filePath, importDataType, res);
+//     } else if (fileExt === '.xlsx') {
+//         importExcelData(filePath, importDataType, res);
+//     } else {
+//         return res.status(400).send('Unsupported file type');
+//     }
+// });
 
-function importCsvData(filePath, importDataType, res) {
-    const results = [];
-    fs.createReadStream(filePath)
-        .pipe(csv())
-        .on('data', (data) => results.push(data))
-        .on('end', () => {
-            storeDataInDatabase(results, importDataType, res);
-            fs.unlinkSync(filePath); // 删除临时文件
-        });
-}
+// function importCsvData(filePath, importDataType, res) {
+//     const results = [];
+//     fs.createReadStream(filePath)
+//         .pipe(csv())
+//         .on('data', (data) => results.push(data))
+//         .on('end', () => {
+//             storeDataInDatabase(results, importDataType, res);
+//             fs.unlinkSync(filePath); // 删除临时文件
+//         });
+// }
 
-function importExcelData(filePath, importDataType, res) {
-    const workbook = xlsx.readFile(filePath);
-    const sheetName = workbook.SheetNames[0];
-    const worksheet = workbook.Sheets[sheetName];
-    const jsonData = xlsx.utils.sheet_to_json(worksheet);
-    storeDataInDatabase(jsonData, importDataType, res);
-    fs.unlinkSync(filePath); // 删除临时文件
-}
+// function importExcelData(filePath, importDataType, res) {
+//     const workbook = xlsx.readFile(filePath);
+//     const sheetName = workbook.SheetNames[0];
+//     const worksheet = workbook.Sheets[sheetName];
+//     const jsonData = xlsx.utils.sheet_to_json(worksheet);
+//     storeDataInDatabase(jsonData, importDataType, res);
+//     fs.unlinkSync(filePath); // 删除临时文件
+// }
 
-function storeDataInDatabase(data, importDataType, res) {
-    let tableName;
-    let fields = [];
-    let values = [];
+// function storeDataInDatabase(data, importDataType, res) {
+//     let tableName;
+//     let fields = [];
+//     let values = [];
 
-    // 根据不同的数据类型选择不同的数据库表
-    if (importDataType === 'type1') {
-        tableName = 'users';
-    } else if (importDataType === 'type2') {
-        tableName = 'fish';
-    } else if (importDataType === 'type3') {
-        tableName = 'waterqualitydata';
-    } else {
-        return res.status(400).send('Invalid data type');
-    }
+//     // 根据不同的数据类型选择不同的数据库表
+//     if (importDataType === 'type1') {
+//         tableName = 'users';
+//     } else if (importDataType === 'type2') {
+//         tableName = 'fish';
+//     } else if (importDataType === 'type3') {
+//         tableName = 'waterqualitydata';
+//     } else {
+//         return res.status(400).send('Invalid data type');
+//     }
 
-    // 获取字段名
-    fields = Object.keys(data[0]);
+//     // 获取字段名
+//     fields = Object.keys(data[0]);
 
-    // 生成插入语句
-    const sql = `INSERT INTO ${tableName} (${fields.join(', ')}) VALUES ?`;
+//     // 生成插入语句
+//     const sql = `INSERT INTO ${tableName} (${fields.join(', ')}) VALUES ?`;
 
-    // 生成值
-    values = data.map(item => fields.map(field => item[field]));
+//     // 生成值
+//     values = data.map(item => fields.map(field => item[field]));
 
-    db.query(sql, [values], (err, result) => {
-        if (err) {
-            console.error(err);
-            return res.status(500).send('Failed to import data');
-        }
-        res.send('Data imported successfully');
-    });
-}
+//     db.query(sql, [values], (err, result) => {
+//         if (err) {
+//             console.error(err);
+//             return res.status(500).send('Failed to import data');
+//         }
+//         res.send('Data imported successfully');
+//     });
+// }
 
 router.get('/export', (req, res) => {
     const exportDataType = req.query.type; // 获取导出数据类型参数
@@ -177,7 +172,7 @@ router.get('/export', (req, res) => {
             console.error(err);
             return res.status(500).send('Failed to export data');
         }
-        
+
         // 导出数据为 JSON 格式
         res.json(results);
     });

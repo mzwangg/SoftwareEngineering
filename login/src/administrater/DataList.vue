@@ -5,7 +5,7 @@
             <button @click="startSearch()" style="margin-left: 2px;">搜索</button>
         </div>
         <div style="width: 250px;">
-            <button @click="addDialogVisible = true">添加用户</button>
+            <button @click="showAddDialog = true">添加用户</button>
             <button @click="showImportDialog = true">导入数据</button>
             <button @click="showExportDialog = true">导出数据</button>
         </div>
@@ -26,7 +26,7 @@
     <Pagination :total="totalUsers" :pageSize="pageSize" @pageChange="handlePageChange" class="pagination " />
 
     <!-- 增加用户对话框 -->
-    <el-dialog v-model="addDialogVisible" title="增加用户" width="350px">
+    <el-dialog v-model="showAddDialog" title="增加用户" width="350px">
         <el-form :model="addForm" label-width="20%">
             <el-form-item label="用户名">
                 <el-input v-model="addForm.account" autocomplete="off"></el-input>
@@ -43,46 +43,42 @@
         </el-form>
 
         <span slot="footer" class="dialog-footer">
-            <el-button @click="addDialogVisible = false" style="margin:0 20%;">取消</el-button>
+            <el-button @click="showAddDialog = false" style="margin:0 20%;">取消</el-button>
             <el-button type="primary" @click="addUser" style="margin:0 20%;">确定</el-button>
         </span>
     </el-dialog>
 
-    <!-- 导入数据对话框 -->
     <el-dialog title="导入数据" v-model="showImportDialog" width="350px">
-        <el-form>
-            <el-form-item label="选择文件">
-                <el-upload ref="upload" action="" :http-request="handleFileUpload" :auto-upload="false"
-                    accept=".csv,.xlsx,.txt">
-                    <el-button type="primary" class="left-align">点击上传</el-button>
-                </el-upload>
-            </el-form-item>
+        <el-form :model="importForm">
             <el-form-item label="数据类型">
-                <el-select v-model="importDataType" placeholder="请选择数据类型">
+                <el-select v-model="importForm.importDataType" placeholder="请选择数据类型">
                     <el-option label="用户数据" value="type1"></el-option>
                     <el-option label="鱼类数据" value="type2"></el-option>
                     <el-option label="水文数据" value="type3"></el-option>
                 </el-select>
             </el-form-item>
+            <el-form-item label="选择文件">
+                <input type="file" @change="handleFileChange" />
+            </el-form-item>
         </el-form>
-        <div slot="footer" class="dialog-footer">
+        <span slot="footer" class="dialog-footer">
             <el-button @click="showImportDialog = false">取消</el-button>
-            <el-button type="primary" @click="handleImport">导入</el-button>
-        </div>
+            <el-button type="primary" @click="submitImport">确定</el-button>
+        </span>
     </el-dialog>
 
     <!-- 导出数据对话框 -->
     <el-dialog title="导出数据" v-model="showExportDialog" width="350px">
-        <el-form>
+        <el-form :model="exportForm">
             <el-form-item label="数据类型">
-                <el-select v-model="exportDataType" placeholder="请选择数据类型">
+                <el-select v-model="exportForm.exportDataType" placeholder="请选择数据类型">
                     <el-option label="用户数据" value="type1"></el-option>
                     <el-option label="鱼类数据" value="type2"></el-option>
                     <el-option label="水文数据" value="type3"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="文件名称">
-                <el-input v-model="exportFileName" placeholder="输入文件名称"></el-input>
+                <el-input v-model="exportForm.exportFileName" placeholder="输入文件名称"></el-input>
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -95,11 +91,10 @@
 <script>
 import UserItem from './UserItem.vue';
 import Pagination from './Pagination.vue';
-import axios from 'axios';
 import { getUsers } from '../api/users.js';
 import { addUser } from '../api/users.js';
-import { uploadfile } from '../api/users.js';
-import { exportfile } from '../api/users.js';
+import { uploadfile } from '../api/datas.js';
+import { downloadfile } from '../api/datas.js';
 
 export default {
     components: {
@@ -108,34 +103,25 @@ export default {
     },
     data() {
         return {
-            users: [
-                // { id: 1, account: 'user1', password: '******', identity: 'Admin' },
-                // { id: 2, account: 'user2', password: '******', identity: 'User' },
-                // { id: 3, account: 'user3', password: '******', identity: 'User' },
-                // { id: 4, account: 'user4', password: '******', identity: 'User' },
-                // { id: 5, account: 'user5', password: '******', identity: 'User' },
-                // { id: 6, account: 'user6', password: '******', identity: 'User' },
-                // { id: 7, account: 'user7', password: '******', identity: 'User' },
-                // { id: 8, account: 'user8', password: '******', identity: 'User' },
-                // { id: 9, account: 'user9', password: '******', identity: 'User' },
-                // { id: 10, account: 'user10', password: '******', identity: 'User' },
-                // { id: 11, account: 'user11', password: '******', identity: 'User' },
-                // { id: 12, account: 'user12', password: '******', identity: 'User' },
-                // // 其他示例用户数据...
-            ],
+            users: [],
             currentPage: 1,
             pageSize: 8,
+            showAddDialog: false,
+            showExportDialog: false,
+            showImportDialog: false,
             addForm: {
                 account: '',
                 password: '',
                 identity: ''
             },
-            addDialogVisible: false,
-            showImportDialog: false,
-            showExportDialog: false,
-            importDataType: '',
-            exportDataType: '',
-            exportFileName: ''
+            importForm: {
+                importDataType: '',
+                file: null
+            },
+            exportForm: {
+                exportDataType: '',
+                exportFileName: '',
+            }
         };
     },
     computed: {
@@ -153,92 +139,56 @@ export default {
             this.currentPage = page;
         },
         async addUser() {
-            // // 编辑用户逻辑
-            // console.log('Added user:', this.addForm);
-            // this.addDialogVisible = false;
-
             try {
                 // 发送POST请求添加用户
                 const response = await addUser(this.addForm);
                 console.log('User added:', response.data);
                 this.$message.success('用户添加成功');
-                this.addDialogVisible = false;
+                this.showAddDialog = false;
                 this.fetchUsers();
             } catch (error) {
                 console.error('Error adding user:', error);
                 this.$message.error('添加用户失败');
             }
         },
-        async handleFileUpload(file) {
-            // // 处理文件上传
-            // console.log('Uploaded file:', file.file)
-            try{
-                const formData = new FormData();
-                formData.append('file', file.file);
-                formData.append('type', this.importDataType);
-                const response = await uploadfile(formData);
-                console.log('file uploaded:', response.data);
-                this.$message.success('文件上传成功');
-                this.addDialogVisible = false;
-            } catch (error) {
-                console.error('Error uploading file:', error);
-                this.$message.error('上传文件失败');
+
+        handleFileChange(event) {
+            this.importForm.file = event.target.files[0];
+        },
+        async submitImport() {
+            if (!this.importForm.importDataType || !this.importForm.file) {
+                this.$message.error('请选择数据类型并选择文件');
+                return;
             }
-        },
-        handleImport() {
-            // // 处理导入逻辑
-            // console.log('Importing file with type:', this.importDataType)
-            // this.showImportDialog = false
-            this.$refs.upload.submit();
-        },
-        async handleExport() {
-            // if (!this.exportFileName) {
-            //     this.$message.error('请提供文件名称');
-            //     return;
-            // }
 
-            // // 模拟导出数据
-            // const data = { name: '示例数据', value: 12345 };
-            // const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-            // const url = URL.createObjectURL(blob);
+            const formData = new FormData();
+            formData.append('file', this.importForm.file);
+            formData.append('type', this.importForm.importDataType);
 
-            // const link = document.createElement('a');
-            // link.href = url;
-            // link.download = this.exportFileName + '.json';
-            // document.body.appendChild(link);
-            // link.click();
-            // document.body.removeChild(link);
-
-            // URL.revokeObjectURL(url);
-
-            // this.showExportDialog = false;
             try {
-                // 调用后端导出文件 API
-                const response = await exportfile(this.exportDataType);
-                console.log('Exported data:', response.data);
-
-                // 根据数据类型选择文件名称和格式
-                let fileName = this.exportFileName;
-                let fileExt = 'json';
-
-                // 生成文件内容
-                const blob = new Blob([JSON.stringify(response.data, null, 2)], { type: 'application/json' });
-                const url = URL.createObjectURL(blob);
-
-                // 创建并下载文件
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = `${fileName}.${fileExt}`;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-
-                URL.revokeObjectURL(url);
+                const response = await uploadfile(formData);
+                this.$message.success('文件上传成功');
+                this.showImportDialog = false;
             } catch (error) {
-                console.error('Error exporting data:', error);
-                this.$message.error('导出数据失败');
+                this.$message.error('文件上传失败');
             }
         },
+
+        async handleExport() {
+            if (!this.exportForm.exportDataType || !this.exportForm.exportFileName) {
+                this.$message.error('请选择数据类型并输入文件名称');
+                return;
+            }
+
+            try {
+                const response = await downloadfile(this.exportForm);
+                this.$message.success('文件导出成功');
+                this.showImportDialog = false;
+            } catch (error) {
+                this.$message.error('文件导出失败');
+            }
+        },
+        
         async fetchUsers() {
             try {
                 const response = await getUsers();
