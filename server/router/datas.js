@@ -12,7 +12,6 @@ const fastcsv = require('fast-csv');
 // 设置文件上传存储
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
-const XLSX = require('xlsx'); // Import the xlsx library
 
 const parseXLSX = (buffer) => {
     const workbook = xlsx.read(buffer, { type: 'buffer' });
@@ -24,12 +23,35 @@ const parseXLSX = (buffer) => {
     const records = json.slice(1).map(row => {
         const record = {};
         headers.forEach((header, index) => {
-            record[header] = row[index];
+            let value = row[index];
+            // 检查是否是日期序列号
+            if (index == 0) {
+                value = excelDateToJSDate(value);
+            }
+            record[header] = value;
         });
         return record;
     });
 
     return { headers, records };
+};
+
+// 将Excel日期序列号转换为JS日期对象
+const excelDateToJSDate = (serial) => {
+    const utc_days = Math.floor(serial - 25569);
+    const utc_value = utc_days * 86400;
+    const date_info = new Date(utc_value * 1000);
+
+    const fractional_day = serial - Math.floor(serial) + 0.0000001;
+    let total_seconds = Math.floor(86400 * fractional_day);
+
+    const seconds = total_seconds % 60;
+    total_seconds -= seconds;
+
+    const hours = Math.floor(total_seconds / (60 * 60));
+    const minutes = Math.floor(total_seconds / 60) % 60;
+
+    return new Date(Date.UTC(date_info.getFullYear(), date_info.getMonth(), date_info.getDate(), hours, minutes, seconds));
 };
 
 const parseCSV = (buffer) => {
