@@ -11,7 +11,7 @@
  Target Server Version : 80032
  File Encoding         : 65001
 
- Date: 17/06/2024 15:22:16
+ Date: 18/06/2024 00:36:37
 */
 
 SET NAMES utf8mb4;
@@ -28,7 +28,9 @@ CREATE TABLE `fish`  (
   `Length2(cm)` double NULL DEFAULT NULL,
   `Length3(cm)` double NULL DEFAULT NULL,
   `Height(cm)` double NULL DEFAULT NULL,
-  `Width(cm)` double NULL DEFAULT NULL
+  `Width(cm)` double NULL DEFAULT NULL,
+  `id` int(0) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -74,7 +76,9 @@ CREATE TABLE `ohio-river-1957-1999`  (
   `Weight_Est` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `Notes_Pop` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `Voucher_Type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `CatNo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL
+  `CatNo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `id` int(0) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -120,7 +124,9 @@ CREATE TABLE `ohio-river-1957-2016`  (
   `Weight_Est` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `Notes_Pop` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `Voucher_Type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `CatNo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL
+  `CatNo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `id` int(0) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -166,7 +172,9 @@ CREATE TABLE `ohio-river-2000-2009`  (
   `Weight_Est` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `Notes_Pop` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `Voucher_Type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `CatNo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL
+  `CatNo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `id` int(0) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -212,7 +220,9 @@ CREATE TABLE `orsanco-fish-2010-2023`  (
   `Weight_Est` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `Notes_Pop` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `Voucher_Type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `CatNo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL
+  `CatNo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `id` int(0) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -226,23 +236,25 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users`  (
   `account` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `identity` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL
+  `identity` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `id` int(0) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('alice123', '$2b$10$o377BGlhHC1cEwGDHmOGqOLEEjrfv2Q.qsxYi1Ub.M0QJVMF.wODy', 'User');
-INSERT INTO `users` VALUES ('admin123', '$2b$10$nqcEZ9tjvJ9I7g0dCBhv0uHsfu7vIWVwPqPn2eE/jfnF8XF7yCBEW', 'Admin');
-INSERT INTO `users` VALUES ('xiaoming', '$2b$10$SOLVZSWpj4kDZTKvqD6UUewtQmxxeWcBe4ycxuGrwNKHQxNm3fWaW', 'User');
-INSERT INTO `users` VALUES ('111111', '$2b$10$YUpl.yDyOCe8Nq8ogY7xmeorKeblthvyjzhSQa6kcJzoUn4SC.jy6', 'Admin');
+INSERT INTO `users` VALUES ('alice123', '$2b$10$o377BGlhHC1cEwGDHmOGqOLEEjrfv2Q.qsxYi1Ub.M0QJVMF.wODy', 'User', 1);
+INSERT INTO `users` VALUES ('admin123', '$2b$10$nqcEZ9tjvJ9I7g0dCBhv0uHsfu7vIWVwPqPn2eE/jfnF8XF7yCBEW', 'Admin', 2);
+INSERT INTO `users` VALUES ('xiaoming', '$2b$10$SOLVZSWpj4kDZTKvqD6UUewtQmxxeWcBe4ycxuGrwNKHQxNm3fWaW', 'User', 3);
+INSERT INTO `users` VALUES ('111111', '$2b$10$YUpl.yDyOCe8Nq8ogY7xmeorKeblthvyjzhSQa6kcJzoUn4SC.jy6', 'Admin', 4);
 
 -- ----------------------------
 -- Table structure for waterqualitydata
 -- ----------------------------
 DROP TABLE IF EXISTS `waterqualitydata`;
 CREATE TABLE `waterqualitydata`  (
-  `监测时间` date NULL DEFAULT NULL,
+  `监测时间` datetime(0) NULL DEFAULT NULL,
   `水质类别` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `水温（℃）` double NULL DEFAULT NULL,
   `pH(无量纲)` double NULL DEFAULT NULL,
@@ -253,7 +265,9 @@ CREATE TABLE `waterqualitydata`  (
   `氨氮（mg/L）` double NULL DEFAULT NULL,
   `总磷（mg/L）` double NULL DEFAULT NULL,
   `总氮（mg/L）` double NULL DEFAULT NULL,
-  `站点情况` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL
+  `站点情况` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `id` int(0) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -281,7 +295,9 @@ CREATE TABLE `wqd_supplementary`  (
   `总氮(mg/L)` double NULL DEFAULT NULL,
   `叶绿素α(mg/L)` double NULL DEFAULT NULL,
   `藻密度(cells/L)` double NULL DEFAULT NULL,
-  `站点情况` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL
+  `站点情况` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `id` int(0) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
