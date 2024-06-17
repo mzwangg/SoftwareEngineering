@@ -5,8 +5,22 @@ const bcrypt = require('bcrypt');
 
 // 获取所有用户数据
 router.get('/users', (req, res) => {
-    const sql = 'SELECT * FROM users'; // 根据你的数据库表名调整此查询
+    const sql = 'SELECT * FROM users';
     db.query(sql, (err, results) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+            res.json(results);
+        }
+    });
+});
+
+// 查找用户数据
+router.get('/search/:account', (req, res) => {
+    let useraccount = '%' + req.params.account + '%';
+    const sql = 'SELECT * FROM users WHERE account LIKE ?';
+    db.query(sql, [useraccount], (err, results) => {
         if (err) {
             console.error(err);
             res.status(500).json({ error: 'Internal Server Error' });
@@ -177,5 +191,7 @@ router.get('/export', (req, res) => {
         res.json(results);
     });
 });
+
+
 
 module.exports = router;
