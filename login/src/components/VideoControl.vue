@@ -1,5 +1,5 @@
 <template>
-  <div style="display: flex;align-items: center;justify-content: center;flex-direction: column;">
+  <div style="display: flex;align-items: center;justify-content: center;flex-direction: column; width: 95%;">
     <video id="videoPlayer" controls>
       <source src="@/ai-center/video/a.mp4" type="video/mp4">
       Your browser does not support the video tag.

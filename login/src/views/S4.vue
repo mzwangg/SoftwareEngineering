@@ -98,7 +98,7 @@
 
         <div class="box">
           <div class="tit">AI提示</div>
-          <div class="message" style="height: 160px;">
+          <div class="message" style="height: 100px;">
             未来几天可能降雨<br>
             请确保温度、风度正常。
           </div>
@@ -106,20 +106,8 @@
 
         <div class="box">
           <div class="tit">气象数据</div>
-          <div class="boxnav" style="height: 76px;">
-            <div class="weather">
-              <div class="wt1">
-                <div class="wt2"><img src="../ai-center/img/weather.png">
-                  <p>29<sup>℃</sup></p>
-                </div>
-                <span>多云转晴</span>
-              </div>
-              <div class="wt03">
-                <p><span>气温：</span>20 ~ 32℃</p>
-                <p><span>降水量：</span>32毫米</p>
-                <p><span>风况：</span>西北风微风</p>
-              </div>
-            </div>
+          <div class="boxnav" style="height: 136px;">
+            <Weather />
           </div>
         </div>
 
@@ -133,6 +121,7 @@ import HeaderComponent from '../components/HeaderComponent.vue';
 import VideoControl from '@/components/VideoControl.vue';
 import AiControl from '@/ai-center/AiControl.vue';
 import EchartAqpf from '@/ai-center/EchartAqpf.vue';
+import Weather from '@/ai-center/Weather.vue';
 
 export default {
   components: {
@@ -140,6 +129,7 @@ export default {
     VideoControl,
     AiControl,
     EchartAqpf,
+    Weather,
   },
   // 其他页面的代码继续
 };
@@ -182,48 +172,5 @@ export default {
     margin-bottom: 0;
     font-size: 16px;
     color: #fff;
-}
-
-.weather {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 10px;
-    height: 100%;
-    align-items: center;
-}
-
-.wt2 {
-    display: flex;
-    align-items: center;
-}
-
-.wt2 p {
-    font-size: 28px;
-    padding-left: 10px;
-    line-height: 100%;
-}
-
-.wt2 p sup {
-    font-size: 14px;
-}
-
-.wt1 span {
-    font-size: 12px;
-}
-
-.wt1 img {
-    width: 36px;
-}
-
-.wt03 p {
-    line-height: 140%;
-    font-size: 14px;
-}
-
-.wt03 p span {
-    display: inline-block;
-    width: 70px;
-    text-align: right;
-    opacity: .6;
 }
 </style>
