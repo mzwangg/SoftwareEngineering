@@ -58,6 +58,9 @@
 </template>
 
 <script>
+import {sendEmail} from '../api/datas.js';
+import qs from 'qs';
+
 export default {
     props: {
         weatherData: Array,
@@ -124,7 +127,7 @@ export default {
                     return 0;
             }
         },
-        checkThresholds() {
+        async checkThresholds() {
             this.infos = [];
 
             this.waterQualitys.forEach(waterQuality => {
@@ -143,14 +146,46 @@ export default {
 
             this.weatherData.forEach(weather => {
                 this.thresholdConfig.parameters.forEach(param => {
-                    const value = weather[param.name];
-                    if (value !== undefined && value !== null) {
-                        if ((param.min !== null && value < param.min) || (param.max !== null && value > param.max)) {
-                            this.infos.push(`${param.name} 超出阈值，为 ${value}`);
-                        }
+                    let value;
+
+                    // 获取对应的值并检查是否超出阈值
+                    switch (param.name) {
+                        case '气温（℃）':
+                            const highTemp = parseFloat(weather.high);
+                            const lowTemp = parseFloat(weather.low);
+                            if (param.max !== null && highTemp > param.max) {
+                                this.infos.push(`${weather.date} 的最高气温超出阈值，为 ${highTemp}℃`);
+                            }
+                            if (param.min !== null && lowTemp < param.min) {
+                                this.infos.push(`${weather.date} 的最低气温超出阈值，为 ${lowTemp}℃`);
+                            }
+                            break;
+                        case '降雨量（ml）':
+                            value = parseFloat(weather.rainfall);
+                            if ((param.min !== null && value < param.min) || (param.max !== null && value > param.max)) {
+                                this.infos.push(`${weather.date} 的降雨量超出阈值，为 ${value}ml`);
+                            }
+                            break;
+                        case '风速（km/h）':
+                            value = parseFloat(weather.wind_speed);
+                            if ((param.min !== null && value < param.min) || (param.max !== null && value > param.max)) {
+                                this.infos.push(`${weather.date} 的风速超出阈值，为 ${value}km/h`);
+                            }
+                            break;
+                        default:
+                            break;
                     }
                 });
             });
+
+            if (this.thresholdConfig.sendEmail) {
+                try {
+                    const response = await sendEmail({data: this.infos.join('\n')});
+                    this.$message.success('邮件发送成功');
+                } catch (error) {
+                    this.$message.error('邮件发送失败');
+                }
+            }
         },
     },
     mounted() {

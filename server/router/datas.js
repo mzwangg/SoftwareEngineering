@@ -8,6 +8,7 @@ const { Readable } = require('stream');
 const path = require('path');
 const fs = require('fs');
 const fastcsv = require('fast-csv');
+const nodemailer = require('nodemailer');
 
 // 设置文件上传存储
 const storage = multer.memoryStorage();
@@ -184,6 +185,39 @@ router.get('/waterQualitys', (req, res) => {
         } else {
             res.json(results);
         }
+    });
+});
+
+router.post('/email', (req, res) => {
+    const { data } = req.body;
+
+    // 创建一个邮件发送器
+    let transporter = nodemailer.createTransport({
+        host: 'smtp.163.com',
+        port: 465,
+        secure: true,
+        auth: {
+            user: 'semailbox2024@163.com', // 你的邮件地址
+            pass: 'OSXYTEKXQFVVFFHH'   // 你的邮件密码或应用密码
+        }
+    });
+
+    // 邮件选项
+    let mailOptions = {
+        from: 'semailbox2024@163.com',
+        to: 'mzwangg@gmail.com',
+        subject: 'String Array Data',
+        text: `Here is the alarm:\n` + data,
+    };
+
+    // 发送邮件
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.info("Failed to send email");
+            return res.status(500).send({ error: 'Failed to send email' });
+        }
+        console.info("Email sent successfully");
+        res.status(200).send({ message: 'Email sent successfully' });
     });
 });
 
