@@ -39,21 +39,21 @@ const parseXLSX = (buffer) => {
 const excelDateToJSDate = (serial) => {
     // Check for empty input and return null
     if (isNaN(serial) || serial === "") {
-      return null;
+        return null;
     }
-  
+
     const utc_days = Math.floor(serial - 25569);
     const utc_value = utc_days * 86400;
     const date_info = new Date(utc_value * 1000);
-  
+
     // Extract year, month, and day
     const year = date_info.getFullYear();
     const month = date_info.getMonth(); // Month is 0-indexed
     const day = date_info.getDate();
-  
+
     // Return a new Date object with only year, month, and day
     return new Date(year, month, day);
-  };
+};
 
 const parseCSV = (buffer) => {
     const readable = new Readable();
@@ -184,6 +184,23 @@ router.get('/waterQualitys', (req, res) => {
         } else {
             res.json(results);
         }
+    });
+});
+
+router.get('/fishSpecies', (req, res) => {
+    const sql = 'SELECT Species, COUNT(*) as count FROM fish GROUP BY Species';
+
+    db.query(sql, (err, results) => {
+        if (err) {
+            console.error('Error executing SQL query:', err);
+            return res.status(500).json({ error: 'Internal Server Error' });
+        }
+
+        if (!results || results.length === 0) {
+            return res.status(404).json({ error: 'No fish species found' });
+        }
+
+        res.status(200).json(results);
     });
 });
 

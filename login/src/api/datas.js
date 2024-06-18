@@ -20,7 +20,7 @@ export const addUser = (userData) => {
     return instance({
         url: "/api/users",
         method: "POST",
-        data:{
+        data: {
             account,
             password,
             identity
@@ -47,6 +47,14 @@ export const downloadfile = (exportFormData) => {
 export const getWaterQualitys = () => {
     return instance({
         url: "/api/waterQualitys",
+        method: "GET"
+    })
+}
+
+// 获取鱼类种类和数量
+export const getFishSpecies = () => {
+    return instance({
+        url: "/api/fishSpecies",
         method: "GET"
     })
 }

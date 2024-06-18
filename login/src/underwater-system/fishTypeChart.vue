@@ -4,11 +4,27 @@
 
 <script>
 import * as echarts from 'echarts';
+import { getFishSpecies } from '../api/datas.js';
+
 export default {
-  mounted() {
-      this.initEcharts();
+  data() {
+    return {
+      fishData: [] // 保存从数据库获取的鱼类种类和数量
+    };
+  },
+  async mounted() {
+    await this.getFishSpecies();
+    this.initEcharts();
   },
   methods: {
+    async getFishSpecies() {
+      try {
+        const response = await getFishSpecies();
+        this.fishData = response.data;
+      } catch (error) {
+        console.error('Error fetching fish data:', error);
+      }
+    },
     initEcharts() 
     {
       const myChart = echarts.init(document.getElementById("fishTypeChart"));
@@ -18,8 +34,8 @@ export default {
   legend: {
   orient: "vertical",
   x: "left",
-  data: ["金枪鱼", "鲈鱼", "鳕鱼", "鲑鱼", "马哈鱼"],
-  icon: "react",
+  data: this.fishData.map(fish => fish.Species),
+  icon: "rect",
   textStyle: {
       color: "#ffffff", // 白色
     },
@@ -29,30 +45,20 @@ export default {
     {
       type: "pie",
       radius: "60%",
-      left: '20%', // 将饼形图向右移动
+      left: '15%', // 将饼形图向右移动
       
-      data: [
-        {
-          value: 1500, // 金枪鱼数量
-          name: "金枪鱼",
-        },
-        {
-          value: 1200, // 鲈鱼数量
-          name: "鲈鱼",
-        },
-        {
-          value: 800, // 鳕鱼数量
-          name: "鳕鱼",
-        },
-        {
-          value: 400, // 鲑鱼数量
-          name: "鲑鱼",
-        },
-        {
-          value: 300, // 马哈鱼数量
-          name: "马哈鱼",
-        },
-      ],
+      data: this.fishData.map(fish => ({
+              value: fish.count,
+              name: fish.Species
+      })),
+  // 标签设置
+  label: {
+        show: true,
+        position: 'outside',
+        formatter: '{b} ({d}%)', // {b}是数据名, {c}是数据值, {d}是百分比
+        color: '#ffffff'
+      },
+      
       //阴影
       emphasis: {
         itemStyle: {
