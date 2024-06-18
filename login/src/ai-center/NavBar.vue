@@ -27,17 +27,19 @@
   .nav-bar {
     height: 100%;
     width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
   }
 
   .nav-bar button {
     height: 100%;
-    width: 80px;
+    width: 100px;
     margin-right: 2px;
     border: none;
     background-color: transparent;
     color: white;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 16px;
     transition: background-color 0.3s;
   }
 

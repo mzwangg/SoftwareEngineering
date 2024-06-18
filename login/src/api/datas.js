@@ -42,3 +42,11 @@ export const downloadfile = (exportFormData) => {
         }
     });
 }
+
+// 获取用户数据
+export const getWaterQualitys = () => {
+    return instance({
+        url: "/api/waterQualitys",
+        method: "GET"
+    })
+}

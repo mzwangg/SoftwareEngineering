@@ -2,8 +2,8 @@
   <div class="weather-app">
     <nav-bar :dates="dates" @date-selected="displayWeather"
       style="border: 2px solid rgba(7, 118, 181, .8);height: 30px;"></nav-bar>
-    <div v-if="weather" style="height: c(100% - 30px); display: flex; justify-content: center; align-items: center;">
-      <div class="weather" style="margin: 10px 0px;">
+    <div v-if="weather" style="height: 70px; display: flex; justify-content: center; align-items: center;">
+      <div class="weather">
         <div style="display:flex; width: 40px; flex-direction: column;">
           <img :src="getWeatherIcon(weather.code_day)" alt="Weather Icon">
           <span style="display: flex;align-items:center;justify-content: center;">{{ weather.text_day }}</span>
@@ -27,15 +27,16 @@ export default {
   components: {
     NavBar
   },
+  props: {
+    weatherData: Array,
+    dates: Array,
+  },
   data() {
     return {
       weather: null,
-      dates: [],
-      weatherData: null,
     };
   },
-  async created() {
-    await this.fetchWeatherData();
+  async mounted() {
     this.displayWeather(this.dates[0]);
   },
   methods: {
@@ -70,7 +71,7 @@ export default {
   display: flex;
   justify-content: space-between;
   padding: 0 10px;
-  height: 85px;
+  height: 100%;
   align-items: center;
   width: 260px;
 }

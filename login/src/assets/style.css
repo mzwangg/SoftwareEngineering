@@ -233,7 +233,11 @@ i {
 
 
 .function {
-    margin-bottom: 15px;
+    /* margin-bottom: 15px; */
+    height: 35px;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
 }
 
 .switch {

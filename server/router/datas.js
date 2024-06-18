@@ -36,24 +36,6 @@ const parseXLSX = (buffer) => {
     return { headers, records };
 };
 
-// 将Excel日期序列号转换为JS日期对象
-// const excelDateToJSDate = (serial) => {
-//     const utc_days = Math.floor(serial - 25569);
-//     const utc_value = utc_days * 86400;
-//     const date_info = new Date(utc_value * 1000);
-
-//     const fractional_day = serial - Math.floor(serial) + 0.0000001;
-//     let total_seconds = Math.floor(86400 * fractional_day);
-
-//     const seconds = total_seconds % 60;
-//     total_seconds -= seconds;
-
-//     const hours = Math.floor(total_seconds / (60 * 60));
-//     const minutes = Math.floor(total_seconds / 60) % 60;
-
-//     return new Date(Date.UTC(date_info.getFullYear(), date_info.getMonth(), date_info.getDate(), hours, minutes, seconds));
-// };
-
 const excelDateToJSDate = (serial) => {
     // Check for empty input and return null
     if (isNaN(serial) || serial === "") {
@@ -191,6 +173,18 @@ router.post('/download', async (req, res) => {
             res.status(500).send('文件导出失败');
             console.error(err);
         });
+});
+
+router.get('/waterQualitys', (req, res) => {
+    const sql = 'SELECT * FROM waterqualitydata';
+    db.query(sql, (err, results) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+            res.json(results);
+        }
+    });
 });
 
 module.exports = router
