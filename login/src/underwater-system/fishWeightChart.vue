@@ -8,7 +8,7 @@
             <button class="fishButton" @click="drawChart('鲈鱼')">鲈鱼</button>
             <button class="fishButton" @click="drawChart('鳕鱼')">鳕鱼</button>
             <button class="fishButton" @click="drawChart('鲑鱼')">鲑鱼</button>
-            <button class="fishButton" @click="drawChart('马哈鱼')">马哈鱼</button>
+            <!-- <button class="fishButton" @click="drawChart('马哈鱼')">马哈鱼</button>-->
         </div>
     </div>
 </template>
