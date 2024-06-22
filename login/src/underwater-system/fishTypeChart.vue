@@ -45,7 +45,7 @@ export default {
     {
       type: "pie",
       radius: "60%",
-      left: '15%', // 将饼形图向右移动
+      left: '13%', // 将饼形图向右移动
       
       data: this.fishData.map(fish => ({
               value: fish.count,
