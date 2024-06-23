@@ -95,6 +95,10 @@ function getTableName(exportDataType) {
             return 'fish';
         case 'type3':
             return 'waterqualitydata';
+        case 'type4':
+            return 'fishnumber';
+        case 'type5':
+            return 'weather';
         default:
             throw new Error('无效的数据类型');
     }

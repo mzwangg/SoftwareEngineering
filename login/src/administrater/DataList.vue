@@ -55,6 +55,8 @@
                     <el-option label="用户数据" value="type1"></el-option>
                     <el-option label="鱼类数据" value="type2"></el-option>
                     <el-option label="水文数据" value="type3"></el-option>
+                    <el-option label="鱼类数量" value="type4"></el-option>
+                    <el-option label="气象数据" value="type5"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="选择文件">
@@ -75,6 +77,8 @@
                     <el-option label="用户数据" value="type1"></el-option>
                     <el-option label="鱼类数据" value="type2"></el-option>
                     <el-option label="水文数据" value="type3"></el-option>
+                    <el-option label="鱼类数量" value="type4"></el-option>
+                    <el-option label="气象数据" value="type5"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="文件名称">
