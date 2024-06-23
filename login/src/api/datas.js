@@ -11,6 +11,15 @@ export const uploadfile = (formData) => {
     });
 };
 
+export const sendEmail = (emailData) => {
+    const { data } = emailData;
+    return instance({
+        url: `/api/email`,
+        method: "POST",
+        data: { data },
+    });
+};
+
 export const addUser = (userData) => {
     const {
         account,

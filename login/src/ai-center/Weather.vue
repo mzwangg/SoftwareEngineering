@@ -74,6 +74,7 @@ export default {
   height: 100%;
   align-items: center;
   width: 260px;
+  font-size: 14px;
 }
 
 .wt03 p span {
