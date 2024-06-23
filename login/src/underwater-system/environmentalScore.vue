@@ -4,12 +4,122 @@
 
 <script>
 import * as echarts from 'echarts';
+import { getwaterdata } from '../api/waterdata.js';
 
 export default {
+    data() {
+        return {
+            score: 0,
+            pH: 0,  // pH(无量纲)
+            O2: 0,  // 溶氧量(mg/L)
+            Mn: 0,  // 高锰酸盐指数（mg/L）
+            NH: 0,  // 氨氮（mg/L）
+            P: 0,  // 总磷（mg/L）
+        };
+    },
     mounted() {
-        this.initEcharts();
+        this.fetchData();
     },
     methods: {
+        async fetchData() {
+            try {
+                const response = await getwaterdata();
+                this.pH = response.data[0]['pH(无量纲)'];
+                this.O2 = response.data[0]['溶氧量(mg/L)'];
+                this.Mn = response.data[0]['高锰酸盐指数（mg/L）'];
+                this.NH = response.data[0]['氨氮（mg/L）'];
+                this.P = response.data[0]['总磷（mg/L）'];
+                
+                if(this.pH > 6 &&this.pH < 9){
+                    this.score += 100*0.2;
+                }
+                
+                if(this.O2>=7.5){
+                    this.score += 100*0.2;
+                }else{
+                    if(this.O2>=6){
+                        this.score += 80*0.2;
+                    }else{
+                        if(this.O2>=5){
+                            this.score += 60*0.2;
+                        }else{
+                            if(this.O2>=3){
+                                this.score += 40*0.2;
+                            }else{
+                                if(this.O2>=2){
+                                    this.score += 20*0.2;
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                if(this.Mn<=2){
+                    this.score += 100*0.2;
+                }else{
+                    if(this.Mn<=4){
+                        this.score += 80*0.2;
+                    }else{
+                        if(this.Mn<=6){
+                            this.score += 60*0.2;
+                        }else{
+                            if(this.Mn<=10){
+                                this.score += 40*0.2;
+                            }else{
+                                if(this.Mn<=15){
+                                    this.score += 20*0.2;
+                                }
+                            }
+                        }
+                        
+                    }
+                }
+
+                if(this.NH<=0.15){
+                    this.score += 100*0.2;
+                }else{
+                    if(this.NH<=0.5){
+                        this.score += 80*0.2;
+                    }else{
+                        if(this.NH<=1){
+                            this.score += 60*0.2;
+                        }else{
+                            if(this.NH<=1.5){
+                                this.score += 40*0.2;
+                            }else{
+                                if(this.NH<=2){
+                                    this.score += 20*0.2;
+                                }
+                            }
+                        }
+                    }
+                }
+                if(this.P<=0.02){
+                    this.score += 100*0.2;
+                }else{
+                    if(this.P<=0.1){
+                        this.score += 80*0.2;
+                    }else{
+                        if(this.P<=0.2){
+                            this.score += 60*0.2;
+                        }else{
+                            if(this.P<=0.3){
+                                this.score += 40*0.2;
+                            }else{
+                                if(this.P<=0.4){
+                                    this.score += 20*0.2;
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                this.initEcharts();
+            } catch (error) {
+                this.$message.error('无法获取水质数据');
+                console.error('Error fetching waterdata:', error);
+            }
+        },
         initEcharts() {
             const myChart = echarts.init(document.getElementById("environmentalScore"));
             var option = {
@@ -94,7 +204,7 @@ export default {
                         top: '40%',
                     },
                     data: [{
-                        value: 90
+                        value: this.score
                     }]
                 }]
             };

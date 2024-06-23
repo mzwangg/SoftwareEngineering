@@ -42,9 +42,11 @@ app.use(jwt({
 const loginRouter = require('./router/login');
 const usersRouter = require('./router/users');
 const datasRouter = require('./router/datas');
+const waterdataRouter = require('./router/waterdata');
 app.use('/api', datasRouter);
 app.use('/api', loginRouter);
 app.use('/api', usersRouter);
+app.use('/api', waterdataRouter);
 
 // 对不符合joi规则的情况进行报错
 app.use((req,res,next)=>{
