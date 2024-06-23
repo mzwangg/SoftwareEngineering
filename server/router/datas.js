@@ -242,4 +242,28 @@ router.get('/fishSpecies', (req, res) => {
     });
 });
 
+router.get('/fishNumbers', (req, res) => {
+    const { startDate, endDate } = req.query;
+
+    // 检查是否提供了日期范围参数
+    if (!startDate || !endDate) {
+        return res.status(400).json({ error: 'startDate and endDate are required' });
+    }
+
+    const sql = `SELECT 日期 as date, 鱼群数量 as value FROM fishnumber WHERE 日期 BETWEEN ? AND ?`;
+
+    db.query(sql, [startDate, endDate], (err, results) => {
+        if (err) {
+            console.error('Error executing SQL query:', err);
+            return res.status(500).json({ error: 'Internal Server Error' });
+        }
+
+        if (!results || results.length === 0) {
+            return res.status(404).json({ error: 'No fish numbers found' });
+        }
+
+        res.status(200).json(results);
+    });
+});
+
 module.exports = router

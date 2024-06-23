@@ -67,3 +67,12 @@ export const getFishSpecies = () => {
         method: "GET"
     })
 }
+
+// 获取鱼群数据
+export const getFishNumbers = (startDate, endDate) => {
+    return instance({
+        url: "/api/fishNumbers",
+        method: "GET",
+        params: { startDate, endDate }
+    });
+}

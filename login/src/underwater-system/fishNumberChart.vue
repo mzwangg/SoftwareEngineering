@@ -18,6 +18,7 @@
 <script>
 import * as echarts from 'echarts';
 import { ElDatePicker } from 'element-plus';
+import { getFishNumbers } from '../api/datas.js';
 
 export default {
   components: {
@@ -26,25 +27,7 @@ export default {
   data() {
     return {
       dateRange: [],
-      originalData: [
-        { date: '2021年06月30日', value: 599 },
-        { date: '2021年07月01日', value: 551 },
-        { date: '2021年07月02日', value: 745 },
-        { date: '2021年07月03日', value: 761 },
-        { date: '2021年07月04日', value: 550 },
-        { date: '2021年07月05日', value: 684 },
-        { date: '2021年07月06日', value: 575 },
-        { date: '2021年07月07日', value: 708 },
-        { date: '2021年07月08日', value: 780 },
-        { date: '2021年07月09日', value: 551 },
-        { date: '2021年07月10日', value: 735 },
-        { date: '2021年07月11日', value: 581 },
-        { date: '2021年07月12日', value: 714 },
-        { date: '2021年07月13日', value: 704 }
-      ].map(item => ({
-  date: item.date.replace(/年|月/g, '-').replace('日', ''),
-  value: item.value
-})),
+      fishData: [], // 保存从数据库获取的鱼群数量数据
       chart: null
     };
   },
@@ -52,6 +35,14 @@ export default {
     this.initEcharts();
   },
   methods: {
+    async fetchFishData(startDate, endDate) {
+      try {
+        const response = await getFishNumbers(startDate, endDate);
+        this.fishData = response.data;
+      } catch (error) {
+        console.error('Error fetching fish data:', error);
+      }
+    },
     initEcharts() {
       this.chart = echarts.init(document.getElementById('fishNumberChart'));
       this.updateChart();
@@ -59,25 +50,14 @@ export default {
         this.chart.resize();
       });
     },
-    updateChart() {
-      let filteredData = this.originalData;
+    async updateChart() {
       if (this.dateRange.length === 2) {
-        const [start, end] = this.dateRange.map(date => {
-          const d = new Date(date)
-          d.setHours(0, 0, 0, 0); 
-          return d;
-        });
-        const lastDay = new Date(end);
-        lastDay.setHours(23, 59, 59, 999);
-
-        filteredData = this.originalData.filter(item => {
-          const itemDate = new Date(item.date.replace(/年|月/g, '-').replace('日', ''));
-          return itemDate >= start && itemDate <= lastDay;
-        });
+        const [start, end] = this.dateRange.map(date => date.toISOString().split('T')[0]);
+        await this.fetchFishData(start, end);
       }
 
-      const dates = filteredData.map(item => item.date);
-      const values = filteredData.map(item => item.value);
+      const dates = this.fishData.map(item => item.date);
+      const values = this.fishData.map(item => item.value);
 
       const maxData = Math.max(...values);
       const maxYAxis = Math.ceil(maxData / 100) * 100;
