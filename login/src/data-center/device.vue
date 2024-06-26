@@ -19,7 +19,7 @@ export default {
                 series: [{
                     type: 'liquidFill',
                     name: 'CPU使用率',
-                    center: ['20%', '22%'],
+                    center: ['22%', '22%'],
                     radius: '38%',
                     // 水球颜色
                     color: ['#ee0000', '#ee0000', '#ee0000'],
@@ -51,7 +51,7 @@ export default {
                     name: '内存使用率',
                     // 水球颜色
                     color: ['#49d088', '#38b470', '#2aaf66'],
-                    center: ['72%', '22%'],
+                    center: ['78%', '22%'],
                     data: [0.5],
                     radius: '38%',
                     label: {
@@ -82,7 +82,7 @@ export default {
                     name: '进程总数',
                     // 水球颜色
                     color: ['#7f00ff', '#F4B30E', '#EACE36'],
-                    center: ['46%', '50%'],
+                    center: ['50%', '50%'],
                     data: [0.1],
                     radius: '38%',
                     label: {
@@ -113,7 +113,7 @@ export default {
                     name: 'GPU使用率',
                     // 水球颜色
                     color: ['#E3B340', '#F4B30E', '#EACE36'],
-                    center: ['20%', '80%'],
+                    center: ['22%', '80%'],
                     data: [0.3],
                     radius: '38%',
                     label: {
@@ -144,7 +144,7 @@ export default {
                     name: '硬盘使用情况',
                     // 水球颜色
                     color: ['#66ccff', '#F4B30E', '#EACE36'],
-                    center: ['72%', '80%'],
+                    center: ['78%', '80%'],
                     data: [0.4],
                     radius: '38%',
                     label: {

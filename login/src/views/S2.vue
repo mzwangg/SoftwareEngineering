@@ -36,7 +36,7 @@
         </div>
 
         <div class="box">
-          <div class="tit">鱼的重量分布曲线</div>
+          <div class="tit">鱼群重量分布曲线</div>
           <div class="boxnav" style="height: 260px;">
             <fishWeightChart />
           </div>

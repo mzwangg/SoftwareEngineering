@@ -46,8 +46,8 @@
           <div class="boxnav" style="height: 280px;">
             <ul class="gnlb">
               <li><span>数据库：<em>Mysql</em></span></li>
-              <li><span>查询次数：<em>1919810</em></span></li>
-              <li><span>成功次数：<em>1919810</em></span></li>
+              <li><span>查询次数：<em>8964</em></span></li>
+              <li><span>成功次数：<em>8964</em></span></li>
               <li><span>查询时间：<em>0.721s</em></span></li>
             </ul>
           </div>
