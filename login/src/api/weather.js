@@ -1,6 +1,6 @@
 import instance from "../http/index.js"
 
-// 获取用户数据
+// 获取天气数据
 export const getWeatherData = () => {
     return instance({
         url: "/api/weather",
@@ -8,6 +8,7 @@ export const getWeatherData = () => {
     })
 }
 
+// 获取7日天气数据
 export const get7DaysWeatherData = (Date) => {
     return instance({
         url: "/api/7daysWeather",

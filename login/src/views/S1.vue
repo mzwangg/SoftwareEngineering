@@ -25,22 +25,14 @@
             <hydrometeorology />
           </div>
         </div>
-        <div class="box">
+        <!--
+          <div class="box">
           <div class="tit">定位</div>
           <div class="boxnav" style="height: 240px">
             <location />
           </div>
         </div>
-
-      </li>
-
-      <li style="width: 33%">
-        <div class="box">
-          <div class="tit">历史记录</div>
-          <div class="boxnav" style="height: 280px">
-            <temperaturePrecipitation />
-          </div>
-        </div>
+        -->
         <div class="box">
           <div class="tit">设备状态</div>
           <div class="boxnav" style="height: 240px">
@@ -51,6 +43,29 @@
             </ul>
           </div>
         </div>
+
+      </li>
+
+      <li style="width: 33%">
+        <div class="box">
+          <div class="tit">去年同期天气历史记录</div>
+          <div class="boxnav" style="height: 575px">
+            <temperaturePrecipitation />
+          </div>
+        </div>
+        <!--
+        <div class="box">
+          <div class="tit">设备状态</div>
+          <div class="boxnav" style="height: 240px">
+            <ul class="gnlb">
+              <li><span>设备ID：<em>8D45FA-24DS-123</em></span></li>
+              <li><span>主控温度：<em>39.64℃</em></span></li>
+              <li><span>次控状态：<em>断开</em></span></li>
+            </ul>
+          </div>
+        </div>
+        -->
+        
       </li>
 
     </ul>

@@ -111,10 +111,10 @@ export default {
 
 <style scoped>
 .fishButton {
-    height: 8%;
-    width: 50px;
-    padding: 10px 2px;
-    margin-right: 10px;
+    height: 3%;
+    width: 64px;
+    padding: 8px 1px;
+    margin-right: 8px;
     border: none;
     background-color: #2f649f;
     color: white;
