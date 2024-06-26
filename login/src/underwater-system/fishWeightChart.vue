@@ -4,11 +4,13 @@
         <div id="fishWeightChart" style="width: 100%; height: 85%;"></div>
         <!-- 添加按钮选项，用于选择不同的鱼类 -->
         <div class="button-container">
-            <button class="fishButton" @click="drawChart('金枪鱼')">金枪鱼</button>
-            <button class="fishButton" @click="drawChart('鲈鱼')">鲈鱼</button>
-            <button class="fishButton" @click="drawChart('鳕鱼')">鳕鱼</button>
-            <button class="fishButton" @click="drawChart('鲑鱼')">鲑鱼</button>
-            <button class="fishButton" @click="drawChart('马哈鱼')">马哈鱼</button>
+            <button class="fishButton" @click="drawChart('Bream')">Bream</button>
+            <button class="fishButton" @click="drawChart('Roach')">Roach</button>
+            <button class="fishButton" @click="drawChart('Whitefish')">Whitefish</button>
+            <button class="fishButton" @click="drawChart('Parkki')">Parkki</button>
+            <button class="fishButton" @click="drawChart('Perch')">Perch</button>
+            <button class="fishButton" @click="drawChart('Pike')">Pike</button>
+            <button class="fishButton" @click="drawChart('Smelt')">Smelt</button>
         </div>
     </div>
 </template>
@@ -16,59 +18,75 @@
 <script>
 import * as echarts from 'echarts'
 import generateFishWeightData from './fishWeightGenerator.js';
+import { getweight } from '../api/fish.js';
 
 export default {
     data() {
         return {
-            fishCountData: [
-                { value: 1500, name: "金枪鱼" },
-                { value: 1200, name: "鲈鱼" },
-                { value: 800, name: "鳕鱼" },
-                { value: 400, name: "鲑鱼" },
-                { value: 300, name: "马哈鱼" }
-            ]
+            // fishCountData: [
+            //     { value: 1500, name: "金枪鱼" },
+            //     { value: 1200, name: "鲈鱼" },
+            //     { value: 800, name: "鳕鱼" },
+            //     { value: 400, name: "鲑鱼" },
+            //     { value: 300, name: "马哈鱼" }
+            // ]
         };
     },
     mounted() {
-        this.drawChart('金枪鱼');
+        this.drawChart('Bream');
     },
     methods: {
-        drawChart(fishType) {
-            var fishWeightData = generateFishWeightData(this.fishCountData);
-            var selectedFishWeights = fishWeightData.find(fish => fish.name === fishType).weights;
-            this.initEcharts(selectedFishWeights);
+        // drawChart(fishType) {
+        //     var fishWeightData = generateFishWeightData(this.fishCountData);
+        //     var selectedFishWeights = fishWeightData.find(fish => fish.name === fishType).weights;
+        //     this.initEcharts(selectedFishWeights);
+        // },
+        async drawChart(fishType) {
+            try {
+                const response = await getweight(fishType);
+                const weights = response.data;
+                //console.log("Weights:", weights);
+
+                const formattedData = weights.map((weightObj, index) => [index, weightObj['Weight(g)']]);
+                //console.log("Formatted Data:", formattedData);
+                
+                this.initEcharts(formattedData);
+            } catch (error) {
+                this.$message.error('无法获取鱼群数据');
+                console.error("Error fetching data:", error);
+            }
         },
         initEcharts(selectedFishWeights) {
             var myChart = echarts.init(document.getElementById("fishWeightChart"));
             var option = {
                 xAxis: {
                     type: 'value',
-                    name: '重量(g)',
+                    name: '样本编号',
                     nameTextStyle: {
-                        color: '#fff' // 横轴字体颜色为白色
+                        color: '#fff'
                     },
                     axisLine: {
                         lineStyle: {
-                            color: '#fff' // 横轴线颜色为白色
+                            color: '#fff'
                         }
                     },
                     splitLine: {
-                        show: false // 隐藏竖直网格线
+                        show: false
                     }
                 },
                 yAxis: {
                     type: 'value',
-                    name: '数量',
+                    name: '重量(g)',
                     nameTextStyle: {
-                        color: '#fff' // 纵轴字体颜色为白色
+                        color: '#fff'
                     },
                     axisLine: {
                         lineStyle: {
-                            color: '#fff' // 纵轴线颜色为白色
+                            color: '#fff'
                         }
                     },
                     splitLine: {
-                        show: false // 隐藏网格线
+                        show: false
                     },
                 },
                 grid: {
