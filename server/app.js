@@ -17,13 +17,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Express 中间件，用于处理错误信息并发送响应
-app.use((req,res,next)=>{
+app.use((req, res, next) => {
     // status 为 1 为失败，默认为 1 
-    res.cc = (err, status=1)=>{
+    res.cc = (err, status = 1) => {
         res.send({
             status,
             // 判断 err 是错误对象还是字符串
-            message:err instanceof Error ? err.message : err,
+            message: err instanceof Error ? err.message : err,
         })
     }
     next()
@@ -31,11 +31,11 @@ app.use((req,res,next)=>{
 
 // 导入jwt
 const jwtconfig = require('./jwt_config/index.js')
-const {expressjwt:jwt} = require('express-jwt')
+const { expressjwt: jwt } = require('express-jwt')
 app.use(jwt({
-    secret:jwtconfig.jwtSecretKey,algorithms:['HS256']
+    secret: jwtconfig.jwtSecretKey, algorithms: ['HS256']
 }).unless({
-    path:[/^\/api\//]
+    path: [/^\/api\//]
 }))
 
 // 引入路由模块
@@ -43,14 +43,15 @@ const loginRouter = require('./router/login');
 const usersRouter = require('./router/users');
 const datasRouter = require('./router/datas');
 const waterdataRouter = require('./router/waterdata');
+const weatherRouter = require('./router/weather');
 app.use('/api', datasRouter);
 app.use('/api', loginRouter);
 app.use('/api', usersRouter);
 app.use('/api', waterdataRouter);
-
+app.use('/api', weatherRouter);
 // 对不符合joi规则的情况进行报错
-app.use((req,res,next)=>{
-    if(err instanceof Joi.ValidationError) return res.cc(err)
+app.use((req, res, next) => {
+    if (err instanceof Joi.ValidationError) return res.cc(err)
 })
 
 app.listen(3007, () => {
