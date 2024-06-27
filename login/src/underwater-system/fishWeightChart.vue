@@ -3,7 +3,7 @@
         <!-- 用于显示ECharts图表的div -->
         <div id="fishWeightChart" style="width: 100%; height: 85%;"></div>
         <!-- 添加按钮选项，用于选择不同的鱼类 -->
-        <div class="button-container">
+        <div class="button-container" style="overflow-x: auto;height: 32px;">
             <button class="fishButton" @click="drawChart('Bream')">Bream</button>
             <button class="fishButton" @click="drawChart('Roach')">Roach</button>
             <button class="fishButton" @click="drawChart('Whitefish')">Whitefish</button>
@@ -111,10 +111,11 @@ export default {
 
 <style scoped>
 .fishButton {
-    height: 3%;
+    height: 100%;
     width: 64px;
     padding: 8px 1px;
     margin-right: 8px;
+    margin-bottom: 5px;
     border: none;
     background-color: #2f649f;
     color: white;

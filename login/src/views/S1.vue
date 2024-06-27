@@ -25,6 +25,7 @@
             <hydrometeorology />
           </div>
         </div>
+
         <!--
           <div class="box">
           <div class="tit">定位</div>
@@ -48,7 +49,7 @@
 
       <li style="width: 33%">
         <div class="box">
-          <div class="tit">去年同期天气历史记录</div>
+          <div class="tit">天气历史记录</div>
           <div class="boxnav" style="height: 575px">
             <temperaturePrecipitation />
           </div>

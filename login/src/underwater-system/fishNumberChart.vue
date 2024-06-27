@@ -1,6 +1,5 @@
 <template>
   <div class="parent-container">
-    <div> </div>
     <div style="margin-top: 0px;">
       <el-date-picker
         v-model="dateRange"
@@ -9,6 +8,7 @@
         start-placeholder="Start date"
         end-placeholder="End date"
         @change="updateChart"
+        style="width: 100%;"
       />
       <div id="fishNumberChart" style="width: 100%; height: 270px;"></div>
     </div>
@@ -25,8 +25,10 @@ export default {
     ElDatePicker
   },
   data() {
+    const defaultStartDate = new Date(2024, 0, 1); // 当前日期
+    const defaultEndDate = new Date(2024, 5, 30);
     return {
-      dateRange: [],
+      dateRange: [defaultStartDate, defaultEndDate],
       fishData: [], // 保存从数据库获取的鱼群数量数据
       chart: null
     };
