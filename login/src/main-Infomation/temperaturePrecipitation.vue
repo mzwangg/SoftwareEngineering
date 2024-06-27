@@ -25,9 +25,9 @@ export default {
     async fetchWeatherData() {
       try {
         const response = await getWeatherData();
-        console.log(response);
+
         this.weatherData = response.data;
-        console.log(this.weatherData);
+
         this.initEcharts();
       } catch (error) {
         console.error("Error fetching weather data:", error);
@@ -50,7 +50,7 @@ export default {
         });
 
         this.sevenDayWeatherData = uniqueWeatherData;
-        console.log(this.sevenDayWeatherData);
+
         this.initSevenDayEcharts();
     } catch (error) {
         console.error("Error fetching 7 days weather data:", error);
@@ -201,7 +201,7 @@ export default {
     let maxYValue = Math.max(maxEvaporation, maxPrecipitation);
 
     let mm = Math.ceil(maxYValue / 20) * 20;
-    console.log(mm);
+
     maxYValue = mm;
 
     var option = {

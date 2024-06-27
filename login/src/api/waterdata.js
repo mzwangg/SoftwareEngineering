@@ -7,3 +7,11 @@ export const getwaterdata = () => {
         method: "GET"
     })
 }
+
+// 获取雷达图所需水质数据
+export const getMoreWaterData = () => {
+    return instance({
+        url: "/api/morewaterdata",
+        method: "GET"
+    })
+}

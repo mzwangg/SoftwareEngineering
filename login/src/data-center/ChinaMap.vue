@@ -107,7 +107,7 @@ export default {
 
 <style>
 .geo-echart {
-  height: 100vh;
+  height: 97vh;
   width: 100vw;
 }
 </style>
