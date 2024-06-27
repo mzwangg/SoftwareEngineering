@@ -12,7 +12,7 @@ export default {
     methods: {
         initEcharts() {
             const myChart = echarts.init(document.getElementById("device"));
-            var maxDiskSize = 2500;
+            var maxDiskSize = 5000;
             var threadNum = 648;
             var option = {
                 //backgroundColor: '#04184A',

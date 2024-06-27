@@ -19,10 +19,22 @@ router.get('/weather', (req, res) => {
 });
 
 router.get('/7daysweather', (req, res) => {
-    const { Date } = req.query;
-    const baseDate = new Date(Date);
+    const { targetDate } = req.query;
+
+    // Check if targetDate is provided
+    if (!targetDate) {
+        return res.status(400).json({ error: 'Target date is required' });
+    }
+
+    // Create Date objects from the targetDate string
+    const baseDate = new Date(targetDate);
+    if (isNaN(baseDate.getTime())) {
+        return res.status(400).json({ error: 'Invalid target date format' });
+    }
+
     const startDate = new Date(baseDate);
     startDate.setDate(baseDate.getDate() - 3);
+
     const endDate = new Date(baseDate);
     endDate.setDate(baseDate.getDate() + 3);
 
@@ -41,12 +53,7 @@ router.get('/7daysweather', (req, res) => {
             return res.status(404).json({ error: 'No weather data found' });
         }
 
-        // 使用Set对象进行去重
-        const uniqueResults = Array.from(new Set(results.map(item => item.date))).map(date => {
-            return results.find(item => item.date === date);
-        });
-
-        res.status(200).json(uniqueResults);
+        res.status(200).json(results);
     });
 });
 

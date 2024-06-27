@@ -9,10 +9,10 @@ export const getWeatherData = () => {
 }
 
 // 获取7日天气数据
-export const get7DaysWeatherData = (Date) => {
+export const get7DaysWeatherData = (targetDate) => {
     return instance({
         url: "/api/7daysWeather",
         method: "GET",
-        params: { Date }
+        params: { targetDate }
     })
 }
